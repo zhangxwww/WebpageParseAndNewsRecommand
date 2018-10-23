@@ -96,22 +96,27 @@ const wchar_t * CharString::wchar() const {
 }
 
 CharString CharString::trim() {
-    int leftIndex = 0;
-    int rightIndex = len;
-    for (int i = 0; i < len - 1; i++) {
-        if (items[i] != L' ' && items[i] != L'\t') {
-            leftIndex = i;
-            break;
-        }
-    }
-    for (int i = len - 1; i > 0; i--) {
-        if (items[i] != L' ' && items[i] != L'\t') {
-            rightIndex = i + 1;
-            break;
-        }
-    }
     CharString cs;
-    cs = this->subString(leftIndex, rightIndex);
+    if (len > 0) {
+        int leftIndex = 0;
+        int rightIndex = len;
+        for (int i = 0; i < len - 1; i++) {
+            if (items[i] != L' ' && items[i] != L'\t') {
+                leftIndex = i;
+                break;
+            }
+        }
+        for (int i = len - 1; i > 0; i--) {
+            if (items[i] != L' ' && items[i] != L'\t') {
+                rightIndex = i + 1;
+                break;
+            }
+        }
+        cs = this->subString(leftIndex, rightIndex);
+    }
+    else {
+        cs = L"";
+    }
     return cs;
 }
 

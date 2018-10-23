@@ -212,18 +212,22 @@ InfoType parseStackTopLabel(const CharString & label) {
     CharString titlePattern;
     CharString timeAndSourcePattern1;
     CharString timeAndSourcePattern2;
+    CharString timeAndSourcePattern3;
     CharString contentPattern;
 
     titlePattern = L"h1";
     timeAndSourcePattern1 = L"post_time_source";
     timeAndSourcePattern2 = L"ep-time-soure";
+    timeAndSourcePattern3 = L"class=\"ptime\"";
     contentPattern = L"id=\"endText\"";
 
-    if (label.indexOf(titlePattern) != -1) {
+    if (label.length() > 1
+        && label.subString(0, 2) == titlePattern) {
         return TITLE;
     }
     else if (label.indexOf(timeAndSourcePattern1) != -1
-        || label.indexOf(timeAndSourcePattern2) != -1) {
+        || label.indexOf(timeAndSourcePattern2) != -1
+        || label.indexOf(timeAndSourcePattern3) != -1) {
         return TIME_AND_SOURCE;
     }
     else if (label.indexOf(contentPattern) != -1) {
@@ -267,7 +271,7 @@ void saveNewsInfo(const NewsInfo & newsInfo,
     std::wofstream infoFile(filePath.wstring());
     std::locale loc(".936");
     infoFile.imbue(loc);
-    
+
     infoFile << newsInfo.getTitle() << std::endl;
     infoFile << newsInfo.getSource() << std::endl;
     infoFile << newsInfo.getTime() << std::endl;

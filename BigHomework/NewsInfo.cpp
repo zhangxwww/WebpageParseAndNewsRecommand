@@ -23,8 +23,14 @@ void NewsInfo::divideTimeAndSource() {
     pattern = L"À´Ô´";
 
     int divisionIndex = timeAndSource.indexOf(pattern);
-    time = timeAndSource.subString(0, divisionIndex).trim();
-    source = timeAndSource.subString(divisionIndex + 3).trim();
+    if (divisionIndex > 0) {
+        time = timeAndSource.subString(0, divisionIndex).trim();
+        source = timeAndSource.subString(divisionIndex + 3).trim();
+    }
+    else {
+        time = timeAndSource.trim();
+        source = L"";
+    }
 }
 
 void NewsInfo::postProcess() {
