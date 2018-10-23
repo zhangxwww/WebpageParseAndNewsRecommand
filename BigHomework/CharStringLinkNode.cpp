@@ -1,36 +1,29 @@
 #include "CharStringLinkNode.h"
 
-CharStringLinkNode::CharStringLinkNode()
-{
+CharStringLinkNode::CharStringLinkNode() {
     next = nullptr;
 }
 
-CharStringLinkNode::CharStringLinkNode(const CharString & cs)
-{
+CharStringLinkNode::CharStringLinkNode(const CharString & cs) {
     charString = cs;
     next = nullptr;
 }
 
-CharStringLinkNode::~CharStringLinkNode()
-{
+CharStringLinkNode::~CharStringLinkNode() {
 }
 
-CharStringLinkNode * CharStringLinkNode::getNext() const
-{
+CharStringLinkNode * CharStringLinkNode::getNext() const {
     return next;
 }
 
-void CharStringLinkNode::setNext(CharStringLinkNode * next)
-{
+void CharStringLinkNode::setNext(CharStringLinkNode * next) {
     this->next = next;
 }
 
-CharString CharStringLinkNode::getCharString() const
-{
+CharString CharStringLinkNode::getCharString() const {
     return charString;
 }
 
-void CharStringLinkNode::setCharString(const CharString & cs)
-{
+void CharStringLinkNode::setCharString(const CharString & cs) {
     this->charString = cs;
 }

@@ -19,18 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm.h" />
     <ClInclude Include="CharString.h" />
     <ClInclude Include="CharStringLink.h" />
     <ClInclude Include="CharStringLinkNode.h" />
+    <ClInclude Include="InfoType.h" />
+    <ClInclude Include="LabelType.h" />
+    <ClInclude Include="NewsInfo.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="Tester.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="CharString.cpp" />
     <ClCompile Include="CharStringLink.cpp" />
     <ClCompile Include="CharStringLinkNode.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewsInfo.cpp" />
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

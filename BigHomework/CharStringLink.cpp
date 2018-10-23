@@ -1,7 +1,6 @@
 #include "CharStringLink.h"
 
-CharStringLink::CharStringLink()
-{
+CharStringLink::CharStringLink() {
     head = new CharStringLinkNode;
     head->setNext(nullptr);
     curPos = head;
@@ -9,8 +8,7 @@ CharStringLink::CharStringLink()
     curIndex = -1;
 }
 
-CharStringLink::CharStringLink(CharStringLink & csl)
-{
+CharStringLink::CharStringLink(CharStringLink & csl) {
 
     head = new CharStringLinkNode;
     curPos = head->getNext();
@@ -27,13 +25,11 @@ CharStringLink::CharStringLink(CharStringLink & csl)
     }
 }
 
-CharStringLink::~CharStringLink()
-{
+CharStringLink::~CharStringLink() {
     delete head;
 }
 
-void CharStringLink::add(const CharString cs)
-{
+void CharStringLink::add(const CharString cs) {
     CharStringLinkNode * csln = new CharStringLinkNode(cs);
     while (curPos->getNext() != nullptr) {
         curPos = curPos->getNext();
@@ -45,8 +41,7 @@ void CharStringLink::add(const CharString cs)
     len++;
 }
 
-bool CharStringLink::remove(const int index)
-{
+bool CharStringLink::remove(const int index) {
     if (index >= len || index < 0) {
         return false;
     }
@@ -62,11 +57,10 @@ bool CharStringLink::remove(const int index)
     return true;
 }
 
-bool CharStringLink::remove(const CharString & cs)
-{
+bool CharStringLink::remove(const CharString & cs) {
     curPos = head;
     curIndex = -1;
-    while (curPos->getNext() != nullptr) {   
+    while (curPos->getNext() != nullptr) {
         if (curPos->getNext()->getCharString() == cs) {
             CharStringLinkNode * tmp = curPos->getNext();
             curPos->setNext(tmp->getNext());
@@ -80,8 +74,7 @@ bool CharStringLink::remove(const CharString & cs)
     return false;
 }
 
-int CharStringLink::search(const CharString & cs)
-{
+int CharStringLink::search(const CharString & cs) {
     curPos = head;
     curIndex = -1;
     while (curPos->getNext() != nullptr) {
@@ -94,13 +87,11 @@ int CharStringLink::search(const CharString & cs)
     return -1;
 }
 
-int CharStringLink::length() const
-{
+int CharStringLink::length() const {
     return len;
 }
 
-CharString CharStringLink::getItem(int index)
-{
+CharString CharStringLink::getItem(int index) {
     if (index >= len) {
         throw ERROR;
     }
@@ -114,13 +105,11 @@ CharString CharStringLink::getItem(int index)
     return curPos->getCharString();
 }
 
-CharStringLinkNode * CharStringLink::getHead() const
-{
+CharStringLinkNode * CharStringLink::getHead() const {
     return head;
 }
 
-std::wostream & operator<<(std::wostream & out, CharStringLink & csl)
-{
+std::wostream & operator<<(std::wostream & out, CharStringLink & csl) {
     CharStringLinkNode * pos = csl.getHead();
     while (pos->getNext() != nullptr) {
         pos = pos->getNext();

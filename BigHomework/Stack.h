@@ -36,8 +36,7 @@ Stack<T>::Stack() {
 }
 
 template<class T>
-Stack<T>::Stack(const Stack & s)
-{
+Stack<T>::Stack(const Stack & s) {
     topPos = s.getTopPos();
     size = s.getSize();
     items = new T[size];
@@ -52,12 +51,11 @@ Stack<T>::~Stack() {
 }
 
 template<class T>
-void Stack<T>::push(const T & item)
-{
+void Stack<T>::push(const T & item) {
     if (topPos == size) { // stack overflow
         T * newItems = new T[size + INCREMENT];
         for (int i = 0; i < size; i++) {
-            newItems[i] = items[i];          
+            newItems[i] = items[i];
         }
         delete[] items;
         items = newItems;
@@ -68,8 +66,7 @@ void Stack<T>::push(const T & item)
 }
 
 template<class T>
-T & Stack<T>::pop()
-{
+T & Stack<T>::pop() {
     if (topPos == 0) {
         throw ERROR;
     }
@@ -78,8 +75,7 @@ T & Stack<T>::pop()
 }
 
 template<class T>
-const T & Stack<T>::top() const
-{
+const T & Stack<T>::top() const {
     if (topPos == 0) {
         throw ERROR;
     }
@@ -87,32 +83,27 @@ const T & Stack<T>::top() const
 }
 
 template<class T>
-inline bool Stack<T>::empty() const
-{
+inline bool Stack<T>::empty() const {
     return topPos == 0;
 }
 
 template<class T>
-inline int Stack<T>::getSize() const
-{
+inline int Stack<T>::getSize() const {
     return size;
 }
 
 template<class T>
-inline int Stack<T>::getTopPos() const
-{
+inline int Stack<T>::getTopPos() const {
     return topPos;
 }
 
 template<class T>
-inline T Stack<T>::at(int index) const
-{
+inline T Stack<T>::at(int index) const {
     return items[index];
 }
 
 template<class T>
-void Stack<T>::operator=(const Stack & s)
-{
+void Stack<T>::operator=(const Stack & s) {
     topPos = s.getTopPos();
     size = s.getSize();
     for (int i = 0; i < topPos; i++) {

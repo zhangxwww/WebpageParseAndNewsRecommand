@@ -33,6 +33,18 @@
     <ClInclude Include="CharStringLinkNode.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="NewsInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CharStringLinkNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NewsInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
