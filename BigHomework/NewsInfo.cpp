@@ -18,6 +18,23 @@ void NewsInfo::appendContent(const CharString & content) {
     this->content.concat(content);
 }
 
+void NewsInfo::divideTimeAndSource() {
+    CharString pattern;
+    pattern = L"À´Ô´";
+
+    int divisionIndex = timeAndSource.indexOf(pattern);
+    time = timeAndSource.subString(0, divisionIndex).trim();
+    source = timeAndSource.subString(divisionIndex + 3).trim();
+}
+
+void NewsInfo::postProcess() {
+    divideTimeAndSource();
+    title = title.trim();
+    time = time.trim();
+    source = source.trim();
+    content = content.trim();
+}
+
 const CharString & NewsInfo::getTitle() const {
     return title;
 }

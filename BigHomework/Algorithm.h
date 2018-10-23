@@ -6,7 +6,7 @@
 #include "LabelType.h"
 #include "InfoType.h"
 
-// extractInfo();
+void extractInfo();
 
 /*************************Assisted functions*************************/
 

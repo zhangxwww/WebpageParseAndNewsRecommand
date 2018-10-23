@@ -4,6 +4,12 @@
 # HTML files
 *.html
 
+# INFO files
+*.info
+
+# TXT files
+*.txt
+
 # User-specific files
 *.suo
 *.user

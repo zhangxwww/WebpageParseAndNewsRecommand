@@ -71,7 +71,8 @@ void Tester::testCharString() {
     std::wcout << cs7.subString(5) << std::endl;
     */
     CharString cs8;
-    cs8 = L"込込";
+    cs8 = L"  込込    ";
+    /*
     CharString cs9;
     cs9 = L"込込込";
     CharString cs10;
@@ -80,6 +81,8 @@ void Tester::testCharString() {
     std::wcout << cs8 << std::endl;
     cs8 = cs10;
     std::wcout << cs8 << std::endl;
+    */
+    std::wcout << cs8.trim() << std::endl;
 }
 
 void Tester::testCharStringLink() {
@@ -165,13 +168,7 @@ void Tester::testNewsInfo() {
 }
 
 void Tester::testAlgorithm() {
-    Stack<CharString> HTMLlist = getHTMLList();
-    
-    while (!HTMLlist.empty()) {
-        std::wcout << HTMLlist.top() << std::endl;
-        parseOneNewsPage(HTMLlist.top());
-        HTMLlist.pop();
-    }
-    /**/
-    // parseOneNewsPage(HTMLlist.top());
+
+    extractInfo();
+
 }

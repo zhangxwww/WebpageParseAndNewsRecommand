@@ -30,6 +30,7 @@ public:
     int * getNext() const;
     const std::wstring wstring() const;
     const wchar_t * wchar() const;
+    CharString trim();
     friend std::wostream & operator<< (std::wostream & out,
         const CharString & cs);
     friend bool operator== (const CharString & cs1,

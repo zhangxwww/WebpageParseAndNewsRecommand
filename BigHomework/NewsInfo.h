@@ -13,6 +13,7 @@ public:
     void appendContent(const CharString & content);
 
     void divideTimeAndSource();
+    void postProcess();
 
     const CharString & getTitle() const;
     const CharString & getSource() const;

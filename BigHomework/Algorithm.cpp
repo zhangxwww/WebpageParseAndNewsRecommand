@@ -3,6 +3,18 @@
 #include <io.h>
 #include <fstream>
 
+void extractInfo() {
+    Stack<CharString> HTMLlist = getHTMLList();
+
+    while (!HTMLlist.empty()) {
+        CharString HTMLfilename = HTMLlist.top();
+        std::wcout << HTMLfilename << std::endl;
+        NewsInfo newsInfo = parseOneNewsPage(HTMLfilename);
+        saveNewsInfo(newsInfo, HTMLfilename);
+        HTMLlist.pop();
+    }
+}
+
 Stack<CharString> getHTMLList() {
     Stack<CharString> HTMLlist;
     CharString path;
@@ -47,6 +59,9 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
         csLine = line;
         parseLine(csLine, info, label, infoType, record);
     }
+    HTMLfile.close();
+
+    info.postProcess();
     return info;
 }
 
@@ -61,7 +76,7 @@ void parseLine(const CharString & line,
     CharString processedLine = line;
 
     while (true) {
-        
+
         if (processedLine[0] == L'<') {
             rightIndex = processedLine.indexOf(L'>');
             isLabel = true;
@@ -78,11 +93,11 @@ void parseLine(const CharString & line,
         }
 
         if (isLabel && rightIndex > 1) {
-            CharString label = processedLine.subString(1, rightIndex);
+            CharString label = processedLine.subString(1, rightIndex).trim();
             processLabel(label, labelStack, infoType, record);
         }
-        else if(!isLabel && rightIndex > 0){
-            CharString text = processedLine.subString(0, rightIndex);
+        else if (!isLabel && rightIndex > 0) {
+            CharString text = processedLine.subString(0, rightIndex).trim();
             if (record) {
                 processText(text, info, infoType);
             }
@@ -90,12 +105,12 @@ void parseLine(const CharString & line,
 
         if (isLabel && rightIndex + 1 < processedLine.length()
             && rightIndex > 0) {
-            processedLine = processedLine.subString(rightIndex + 1);
+            processedLine = processedLine.subString(rightIndex + 1).trim();
             rightIndex = 0;
         }
         else if (!isLabel && rightIndex < processedLine.length()
             && rightIndex > 0) {
-            processedLine = processedLine.subString(rightIndex);
+            processedLine = processedLine.subString(rightIndex).trim();
             rightIndex = 0;
         }
 
@@ -119,11 +134,12 @@ LabelType determineLabelType(const CharString & label) {
     }
 }
 
-void processLabel(const CharString & label, 
-    Stack<CharString>& labelStack, 
-    InfoType & infoType, 
+void processLabel(const CharString & label,
+    Stack<CharString>& labelStack,
+    InfoType & infoType,
     bool & record) {
-    
+
+    // TODO algorithm needs refine
     LabelType type = determineLabelType(label);
     bool startPairLabel = false;
     switch (type) {
@@ -136,7 +152,7 @@ void processLabel(const CharString & label,
                 if (infoType != NONE) {
                     record = true;
                 }
-            }           
+            }
         }
         else {
             while (!labelStack.empty()
@@ -170,22 +186,20 @@ void processLabel(const CharString & label,
     }
 }
 
-void processText(const CharString & text, 
-    NewsInfo & info, 
+void processText(const CharString & text,
+    NewsInfo & info,
     const InfoType & infoType) {
-    
+
     switch (infoType) {
     case TITLE:
         info.setTitle(text);
-        std::wcout << text << std::endl;
         break;
     case TIME_AND_SOURCE:
         info.appendTimeAndSource(text);
-        std::wcout << text << std::endl;
+        // TODO when to make a new paragraph
         break;
     case CONTENT:
         info.appendContent(text);
-        std::wcout << text;
         break;
     case NONE:
         break;
@@ -196,17 +210,20 @@ void processText(const CharString & text,
 
 InfoType parseStackTopLabel(const CharString & label) {
     CharString titlePattern;
-    CharString timeAndSourcePattern;
+    CharString timeAndSourcePattern1;
+    CharString timeAndSourcePattern2;
     CharString contentPattern;
 
     titlePattern = L"h1";
-    timeAndSourcePattern = L"post_time_source";
+    timeAndSourcePattern1 = L"post_time_source";
+    timeAndSourcePattern2 = L"ep-time-soure";
     contentPattern = L"id=\"endText\"";
 
     if (label.indexOf(titlePattern) != -1) {
         return TITLE;
     }
-    else if (label.indexOf(timeAndSourcePattern) != -1) {
+    else if (label.indexOf(timeAndSourcePattern1) != -1
+        || label.indexOf(timeAndSourcePattern2) != -1) {
         return TIME_AND_SOURCE;
     }
     else if (label.indexOf(contentPattern) != -1) {
@@ -217,13 +234,13 @@ InfoType parseStackTopLabel(const CharString & label) {
     }
 }
 
-bool labelMatch(const CharString & startLabel, 
+bool labelMatch(const CharString & startLabel,
     const CharString & endLabel) {
 
     return startLabel.indexOf(endLabel.subString(1)) != -1;
 }
 
-bool labelPriorer(const CharString & stackTopLabel, 
+bool labelPriorer(const CharString & stackTopLabel,
     const CharString & currentLabel) {
 
     CharString divLabel;
@@ -233,4 +250,28 @@ bool labelPriorer(const CharString & stackTopLabel,
         return true;
     }
     return false;
+}
+
+void saveNewsInfo(const NewsInfo & newsInfo,
+    const CharString & HTMLfilename) {
+
+    CharString filePath;
+    filePath = L".\\output\\";
+    CharString postfix;
+    postfix = L".info";
+
+    filePath.concat(HTMLfilename.
+        subString(0, HTMLfilename.indexOf(L".html")));
+    filePath.concat(postfix);
+
+    std::wofstream infoFile(filePath.wstring());
+    std::locale loc(".936");
+    infoFile.imbue(loc);
+    
+    infoFile << newsInfo.getTitle() << std::endl;
+    infoFile << newsInfo.getSource() << std::endl;
+    infoFile << newsInfo.getTime() << std::endl;
+    infoFile << newsInfo.getContent() << std::endl;
+
+    infoFile.close();
 }
