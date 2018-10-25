@@ -18,18 +18,21 @@ void parseLine(const CharString & line,
     NewsInfo & info,
     Stack<CharString> & labelStack,
     InfoType & infoType,
-    bool & record);
+    bool & record,
+    bool & newParagraph);
 
 LabelType determineLabelType(const CharString & label);
 
 void processLabel(const CharString & label,
     Stack<CharString> & labelStack,
     InfoType & infoType,
-    bool & record);
+    bool & record,
+    bool & newParagraph);
 
 void processText(const CharString & text,
     NewsInfo & info,
-    const InfoType & infoType);
+    const InfoType & infoType,
+    bool & newParagraph);
 
 InfoType parseStackTopLabel(const CharString & label);
 

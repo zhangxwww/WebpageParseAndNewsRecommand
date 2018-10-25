@@ -50,6 +50,7 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
     Stack<CharString> label;
     InfoType infoType = NONE;
     bool record = false;
+    bool newParagraph = false;
 
     while (!HTMLfile.eof()) {
         std::getline(HTMLfile, line);
@@ -57,7 +58,8 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
             continue;
         }
         csLine = line;
-        parseLine(csLine, info, label, infoType, record);
+        parseLine(csLine, info, label, 
+            infoType, record, newParagraph);
     }
     HTMLfile.close();
 
@@ -69,7 +71,8 @@ void parseLine(const CharString & line,
     NewsInfo & info,
     Stack<CharString>& labelStack,
     InfoType & infoType,
-    bool & record) {
+    bool & record,
+    bool & newParagraph) {
 
     int rightIndex = 0;
     bool isLabel = false;
@@ -94,12 +97,12 @@ void parseLine(const CharString & line,
 
         if (isLabel && rightIndex > 1) {
             CharString label = processedLine.subString(1, rightIndex).trim();
-            processLabel(label, labelStack, infoType, record);
+            processLabel(label, labelStack, infoType, record, newParagraph);
         }
         else if (!isLabel && rightIndex > 0) {
             CharString text = processedLine.subString(0, rightIndex).trim();
             if (record) {
-                processText(text, info, infoType);
+                processText(text, info, infoType, newParagraph);
             }
         }
 
@@ -137,7 +140,8 @@ LabelType determineLabelType(const CharString & label) {
 void processLabel(const CharString & label,
     Stack<CharString>& labelStack,
     InfoType & infoType,
-    bool & record) {
+    bool & record,
+    bool & newParagraph) {
 
     // TODO algorithm needs refine
     LabelType type = determineLabelType(label);
@@ -148,8 +152,10 @@ void processLabel(const CharString & label,
         if (startPairLabel) {
             labelStack.push(label);
             if (!record) {
-                infoType = parseStackTopLabel(label);
-                if (infoType != NONE) {
+                InfoType info = parseStackTopLabel(label);
+                if (info != NONE
+                    && info != NEW_PARAGRAPH) {
+                    infoType = info;
                     record = true;
                 }
             }
@@ -162,8 +168,16 @@ void processLabel(const CharString & label,
                 InfoType info = parseStackTopLabel(labelStack.top());
                 labelStack.pop();
                 if (info != NONE) {
-                    infoType = NONE;
-                    record = false;
+                    if (info == NEW_PARAGRAPH) {
+                        if (record) {
+                            newParagraph = true;
+                        }
+                    }
+                    else {
+                        infoType = NONE;
+                        record = false;
+                    }
+                    
                 }
             }
             if (!labelStack.empty()
@@ -171,8 +185,15 @@ void processLabel(const CharString & label,
                 InfoType info = parseStackTopLabel(labelStack.top());
                 labelStack.pop();
                 if (info != NONE) {
-                    infoType = NONE;
-                    record = false;
+                    if (info == NEW_PARAGRAPH) {
+                        if (record) {
+                            newParagraph = true;
+                        }
+                    }
+                    else {
+                        infoType = NONE;
+                        record = false;
+                    }
                 }
             }
         }
@@ -188,7 +209,8 @@ void processLabel(const CharString & label,
 
 void processText(const CharString & text,
     NewsInfo & info,
-    const InfoType & infoType) {
+    const InfoType & infoType,
+    bool & newParagraph) {
 
     switch (infoType) {
     case TITLE:
@@ -196,9 +218,15 @@ void processText(const CharString & text,
         break;
     case TIME_AND_SOURCE:
         info.appendTimeAndSource(text);
-        // TODO when to make a new paragraph
         break;
     case CONTENT:
+        // TODO when to make a new paragraph ( <p></p> )
+        if (newParagraph) {
+            CharString newPara;
+            newPara = L"\n";
+            info.appendContent(newPara);
+            newParagraph = false;
+        }
         info.appendContent(text);
         break;
     case NONE:
@@ -214,15 +242,16 @@ InfoType parseStackTopLabel(const CharString & label) {
     CharString timeAndSourcePattern2;
     CharString timeAndSourcePattern3;
     CharString contentPattern;
+    CharString newParagraphPattern;
 
     titlePattern = L"h1";
     timeAndSourcePattern1 = L"post_time_source";
     timeAndSourcePattern2 = L"ep-time-soure";
     timeAndSourcePattern3 = L"class=\"ptime\"";
     contentPattern = L"id=\"endText\"";
+    newParagraphPattern = L"p";
 
-    if (label.length() > 1
-        && label.subString(0, 2) == titlePattern) {
+    if (label.indexOf(titlePattern) == 0) {
         return TITLE;
     }
     else if (label.indexOf(timeAndSourcePattern1) != -1
@@ -232,6 +261,9 @@ InfoType parseStackTopLabel(const CharString & label) {
     }
     else if (label.indexOf(contentPattern) != -1) {
         return CONTENT;
+    }
+    else if (label.indexOf(newParagraphPattern) == 0) {
+        return NEW_PARAGRAPH;
     }
     else {
         return NONE;
