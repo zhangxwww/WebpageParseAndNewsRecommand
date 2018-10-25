@@ -15,7 +15,9 @@ void NewsInfo::appendTimeAndSource(const CharString & timeAndSource) {
 }
 
 void NewsInfo::appendContent(const CharString & content) {
-    this->content.concat(content);
+    if (!content.blank()) {
+        this->content.concat(content);
+    }    
 }
 
 void NewsInfo::divideTimeAndSource() {
@@ -39,6 +41,9 @@ void NewsInfo::postProcess() {
     time = time.trim();
     source = source.trim();
     content = content.trim();
+    if (content[0] == L'\n') {
+        content = content.subString(1);
+    }
 }
 
 const CharString & NewsInfo::getTitle() const {

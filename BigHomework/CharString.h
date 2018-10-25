@@ -31,6 +31,7 @@ public:
     const std::wstring wstring() const;
     const wchar_t * wchar() const;
     CharString trim();
+    bool blank() const;
     friend std::wostream & operator<< (std::wostream & out,
         const CharString & cs);
     friend bool operator== (const CharString & cs1,

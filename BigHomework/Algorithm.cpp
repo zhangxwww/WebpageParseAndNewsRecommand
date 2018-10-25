@@ -51,6 +51,7 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
     InfoType infoType = NONE;
     bool record = false;
     bool newParagraph = false;
+    bool endOf = false;
 
     while (!HTMLfile.eof()) {
         std::getline(HTMLfile, line);
@@ -59,7 +60,11 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
         }
         csLine = line;
         parseLine(csLine, info, label, 
-            infoType, record, newParagraph);
+            infoType, record, newParagraph,
+            endOf);
+        if (endOf) {
+            break;
+        }
     }
     HTMLfile.close();
 
@@ -72,7 +77,8 @@ void parseLine(const CharString & line,
     Stack<CharString>& labelStack,
     InfoType & infoType,
     bool & record,
-    bool & newParagraph) {
+    bool & newParagraph,
+    bool & endOf) {
 
     int rightIndex = 0;
     bool isLabel = false;
@@ -99,10 +105,16 @@ void parseLine(const CharString & line,
             CharString label = processedLine.subString(1, rightIndex).trim();
             processLabel(label, labelStack, infoType, record, newParagraph);
         }
-        else if (!isLabel && rightIndex > 0) {
-            CharString text = processedLine.subString(0, rightIndex).trim();
+        else if (!isLabel) {
+            CharString text;
+            if (rightIndex > 0) {
+                text = processedLine.subString(0, rightIndex).trim();
+            }
+            else {
+                text = processedLine.trim();
+            }
             if (record) {
-                processText(text, info, infoType, newParagraph);
+                processText(text, info, infoType, newParagraph, endOf);
             }
         }
 
@@ -143,7 +155,6 @@ void processLabel(const CharString & label,
     bool & record,
     bool & newParagraph) {
 
-    // TODO algorithm needs refine
     LabelType type = determineLabelType(label);
     bool startPairLabel = false;
     switch (type) {
@@ -210,7 +221,8 @@ void processLabel(const CharString & label,
 void processText(const CharString & text,
     NewsInfo & info,
     const InfoType & infoType,
-    bool & newParagraph) {
+    bool & newParagraph,
+    bool & endOf) {
 
     switch (infoType) {
     case TITLE:
@@ -220,20 +232,38 @@ void processText(const CharString & text,
         info.appendTimeAndSource(text);
         break;
     case CONTENT:
-        // TODO when to make a new paragraph ( <p></p> )
-        if (newParagraph) {
-            CharString newPara;
-            newPara = L"\n";
-            info.appendContent(newPara);
-            newParagraph = false;
-        }
-        info.appendContent(text);
+        if (filtText(text, endOf)) {
+            if (newParagraph) {
+                CharString newPara;
+                newPara = L"\n";
+                info.appendContent(newPara);                
+            }
+            info.appendContent(text);
+        }    
+        newParagraph = false;
         break;
     case NONE:
         break;
     default:
         break;
     }
+}
+
+bool filtText(const CharString & text, bool & endOf) {
+    CharString filter1;
+    CharString filter2;
+    filter1 = L"本文来源";
+    filter2 = L"责任编辑";
+
+    if (text.indexOf(filter1) != -1
+        || text.indexOf(filter2) != -1) {
+        endOf = true;
+        return false;
+    }
+    if (text.blank()) {
+        return false;
+    }
+    return true;
 }
 
 InfoType parseStackTopLabel(const CharString & label) {

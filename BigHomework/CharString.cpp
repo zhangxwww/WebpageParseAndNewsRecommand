@@ -120,6 +120,16 @@ CharString CharString::trim() {
     return cs;
 }
 
+bool CharString::blank() const {
+    for (int i = 0; i < len; i++) {
+        if (items[i] != L' '
+            && items[i] != L'\t') {
+            return false;
+        }
+    }
+    return true;
+}
+
 CharString CharString::subString(const int startPos, const int endPos) const {
     if (startPos < 0 || endPos > len) {
         throw ERROR;
