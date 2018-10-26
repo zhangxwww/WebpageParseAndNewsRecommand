@@ -8,7 +8,10 @@
 *.info
 
 # TXT files
-*.txt
+*.txta
+
+# DIC files
+*.dic
 
 # User-specific files
 *.suo
