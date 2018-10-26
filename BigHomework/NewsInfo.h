@@ -12,13 +12,13 @@ public:
     void appendTimeAndSource(const CharString & timeAndSource);
     void appendContent(const CharString & content);
 
-    void divideTimeAndSource();
-    void postProcess();
-
     const CharString & getTitle() const;
     const CharString & getSource() const;
     const CharString & getTime() const;
     const CharString & getContent() const;
+
+    void divideTimeAndSource();
+    void postProcess();
 
 private:
     CharString title;

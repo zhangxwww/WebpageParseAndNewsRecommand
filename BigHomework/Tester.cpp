@@ -104,6 +104,9 @@ void Tester::testCharStringLink() {
     csl1.add(cs2);
     csl1.add(cs3);
     csl1.add(cs4);
+    csl1.remove(1);
+    std::wcout << csl1 << std::endl;
+    /*
     for (int i = 0; i < 4; i++) {
         std::wcout << csl1.getItem(i) << std::endl;
     }
@@ -142,6 +145,8 @@ void Tester::testCharStringLink() {
         csl1.add(cs1);
     }
     std::wcout << csl1 << std::endl;
+    */
+    
 }
 
 void Tester::testNewsInfo() {

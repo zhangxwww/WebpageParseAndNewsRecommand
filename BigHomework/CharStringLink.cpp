@@ -26,6 +26,12 @@ CharStringLink::CharStringLink(CharStringLink & csl) {
 }
 
 CharStringLink::~CharStringLink() {
+    curPos = head->getNext();
+    while (curPos!= nullptr) {
+        delete head;       
+        head = curPos;
+        curPos = curPos->getNext();
+    }
     delete head;
 }
 
@@ -52,6 +58,7 @@ bool CharStringLink::remove(const int index) {
     }
     CharStringLinkNode * tmp = curPos->getNext();
     curPos->setNext(tmp->getNext());
+    tmp->setNext(nullptr);
     delete tmp;
     len--;
     return true;
