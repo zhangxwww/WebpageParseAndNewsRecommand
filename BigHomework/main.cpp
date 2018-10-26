@@ -17,5 +17,14 @@ int main() {
        
     Tester::testAlgorithm();
 
+    /*
+    locale loc(".936");
+    wcout.imbue(loc);
+    int a = L'°¡';
+    cout << a << endl;
+    cout << LONG_MAX<< endl;
+    cout << (26548+21834 * 65536) % 623654 << endl;
+    */
+    
     return 0;
 }

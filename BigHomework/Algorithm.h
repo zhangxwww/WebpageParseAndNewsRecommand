@@ -30,13 +30,13 @@ void processLabel(const CharString & label,
     bool & record,
     bool & newParagraph);
 
-void processText(const CharString & text,
+void processText(CharString & text,
     NewsInfo & info,
     const InfoType & infoType,
     bool & newParagraph,
     bool & endOf);
 
-bool filtText(const CharString & text, bool & endOf);
+bool filtText(CharString & text, bool & endOf);
 
 InfoType parseStackTopLabel(const CharString & label);
 

@@ -218,7 +218,7 @@ void processLabel(const CharString & label,
     }
 }
 
-void processText(const CharString & text,
+void processText(CharString & text,
     NewsInfo & info,
     const InfoType & infoType,
     bool & newParagraph,
@@ -249,11 +249,13 @@ void processText(const CharString & text,
     }
 }
 
-bool filtText(const CharString & text, bool & endOf) {
+bool filtText(CharString & text, bool & endOf) {
     CharString filter1;
     CharString filter2;
+    CharString filter3;
     filter1 = L"本文来源";
     filter2 = L"责任编辑";
+    filter3 = L"&nbsp;";
 
     if (text.indexOf(filter1) != -1
         || text.indexOf(filter2) != -1) {
@@ -263,6 +265,18 @@ bool filtText(const CharString & text, bool & endOf) {
     if (text.blank()) {
         return false;
     }
+    int spaceStart = text.indexOf(filter3);
+    if (spaceStart != -1) {
+        CharString temp;
+        if (spaceStart > 0) {
+            temp.concat(text.subString(0, spaceStart));
+        }       
+        if (spaceStart + 6 < text.length()) {
+            temp.concat(text.subString(spaceStart + 6));
+        }
+        text = temp;
+    }
+
     return true;
 }
 
