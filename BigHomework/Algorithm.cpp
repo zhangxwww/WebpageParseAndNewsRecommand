@@ -252,10 +252,15 @@ void processText(CharString & text,
 bool filtText(CharString & text, bool & endOf) {
     CharString filter1;
     CharString filter2;
-    CharString filter3;
+    CharString entityName[6];
     filter1 = L"本文来源";
     filter2 = L"责任编辑";
-    filter3 = L"&nbsp;";
+    entityName[0] = L"&nbsp;";
+    entityName[1] = L"&lt;";
+    entityName[2] = L"&gt;";
+    entityName[3] = L"&amp;";
+    entityName[4] = L"&quot;";
+    entityName[5] = L"&apos;";
 
     if (text.indexOf(filter1) != -1
         || text.indexOf(filter2) != -1) {
@@ -265,16 +270,24 @@ bool filtText(CharString & text, bool & endOf) {
     if (text.blank()) {
         return false;
     }
-    int spaceStart = text.indexOf(filter3);
-    if (spaceStart != -1) {
-        CharString temp;
-        if (spaceStart > 0) {
-            temp.concat(text.subString(0, spaceStart));
-        }       
-        if (spaceStart + 6 < text.length()) {
-            temp.concat(text.subString(spaceStart + 6));
-        }
-        text = temp;
+
+    for (int i = 0; i < 6; i++) {
+        while (true) {
+            int entityStart = text.indexOf(entityName[i]);
+            if (entityStart != -1) {
+                CharString temp;
+                if (entityStart > 0) {
+                    temp.concat(text.subString(0, entityStart));
+                }
+                if (entityStart + entityName[i].length() < text.length()) {
+                    temp.concat(text.subString(entityStart + entityName[i].length()));
+                }
+                text = temp;
+            }
+            else {
+                break;
+            }
+        }           
     }
 
     return true;
