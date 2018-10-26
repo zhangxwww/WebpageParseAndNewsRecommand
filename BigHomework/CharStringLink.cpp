@@ -8,19 +8,21 @@ CharStringLink::CharStringLink() {
     curIndex = -1;
 }
 
-CharStringLink::CharStringLink(CharStringLink & csl) {
+CharStringLink::CharStringLink(const CharStringLink & csl) {
 
     head = new CharStringLinkNode;
-    curPos = head->getNext();
+    curPos = head;
     len = csl.length();
     curIndex = 0;
 
     CharStringLinkNode * cslPos = csl.getHead()->getNext();
     while (cslPos != nullptr) {
-        CharString cs = cslPos->getCharString();
-        curPos = new CharStringLinkNode(cs);
-        curPos->setNext(nullptr);
+        CharString cs = cslPos->getCharString();      
+        CharStringLinkNode * temp = new CharStringLinkNode(cs);
+        temp->setNext(nullptr);
+        curPos->setNext(temp);
         curPos = curPos->getNext();
+        cslPos = cslPos->getNext();
         curIndex++;
     }
 }
@@ -44,6 +46,20 @@ void CharStringLink::add(const CharString cs) {
     curPos->setNext(csln);
     curPos = curPos->getNext();
     curIndex = len;
+    len++;
+}
+
+void CharStringLink::add(const CharString cs, int index) {
+    if (index<0 || index>len) {
+        throw ERROR;
+    }
+    CharStringLinkNode * csln = new CharStringLinkNode(cs);
+    curPos = head;
+    for (int i = 0; i < index; i++) {
+        curPos = curPos->getNext();
+    }
+    csln->setNext(curPos->getNext());
+    curPos->setNext(csln);
     len++;
 }
 
@@ -114,6 +130,32 @@ CharString CharStringLink::getItem(int index) {
 
 CharStringLinkNode * CharStringLink::getHead() const {
     return head;
+}
+
+void CharStringLink::operator=(const CharStringLink & csl) {
+    curPos = head->getNext();
+    while (curPos != nullptr) {
+        delete head;
+        head = curPos;
+        curPos = curPos->getNext();
+    }
+    delete head;
+
+    head = new CharStringLinkNode;
+    curPos = head;
+    len = csl.length();
+    curIndex = 0;
+
+    CharStringLinkNode * cslPos = csl.getHead()->getNext();
+    while (cslPos != nullptr) {
+        CharString cs = cslPos->getCharString();
+        CharStringLinkNode * temp = new CharStringLinkNode(cs);
+        temp->setNext(nullptr);
+        curPos->setNext(temp);
+        curPos = curPos->getNext();
+        cslPos = cslPos->getNext();
+        curIndex++;
+    }
 }
 
 std::wostream & operator<<(std::wostream & out, CharStringLink & csl) {

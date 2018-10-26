@@ -1,5 +1,5 @@
-#ifndef ALGORITHM_H
-#define ALGORITHM_H
+#ifndef EXTRACT_INFO_H
+#define EXTRACT_INFO_H
 
 #include "NewsInfo.h"
 #include "Stack.h"
@@ -8,7 +8,7 @@
 
 void extractInfo();
 
-/*************************Assisted functions*************************/
+/*********************Assisted functions*********************/
 
 Stack<CharString> getHTMLList();
 
@@ -49,4 +49,4 @@ bool labelPriorer(const CharString & stackTopLabel,
 void saveNewsInfo(const NewsInfo & newsInfo,
     const CharString & HTMLfilename);
 
-#endif // !ALGORITHM_H
+#endif // !EXTRACT_INFO_H

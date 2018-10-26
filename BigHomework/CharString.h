@@ -4,6 +4,7 @@
 #include "Status.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 
 class CharString {
 public:
@@ -34,6 +35,8 @@ public:
     bool blank() const;
     friend std::wostream & operator<< (std::wostream & out,
         const CharString & cs);
+    friend std::wifstream & operator>> (std::wifstream & in,
+        CharString & cs);
     friend bool operator== (const CharString & cs1,
         const CharString & cs2);
 

@@ -1,14 +1,15 @@
 #ifndef TESTER_H
 #define TESTER_H
 
-#include <iostream>
-
 #include "Stack.h"
 #include "CharString.h"
 #include "CharStringLinkNode.h"
 #include "CharStringLink.h"
 #include "NewsInfo.h"
-#include "Algorithm.h"
+#include "ExtractInfo.h"
+#include "InitDictionary.h"
+
+#include <iostream>
 
 class Tester {
 public:
@@ -16,7 +17,8 @@ public:
     static void testCharString();
     static void testCharStringLink();
     static void testNewsInfo();
-    static void testAlgorithm();
+    static void testExtractInfo();
+    static void testInitDictionary();
 private:
     explicit Tester() {};
 };

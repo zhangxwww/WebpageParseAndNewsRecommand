@@ -105,7 +105,10 @@ void Tester::testCharStringLink() {
     csl1.add(cs3);
     csl1.add(cs4);
     csl1.remove(1);
-    std::wcout << csl1 << std::endl;
+    CharStringLinkNode * p = csl1.getHead()->getNext();
+    CharString cs5;
+    cs5 = p->getCharString();
+    std::wcout << cs5 << std::endl;
     /*
     for (int i = 0; i < 4; i++) {
         std::wcout << csl1.getItem(i) << std::endl;
@@ -172,8 +175,31 @@ void Tester::testNewsInfo() {
     std::wcout << info.getContent() << std::endl;
 }
 
-void Tester::testAlgorithm() {
-
+void Tester::testExtractInfo() {
     extractInfo();
+}
 
+void Tester::testInitDictionary() {
+    CharStringHashTable hashTable = initDictionary();
+    // CharStringHashTable hashTable;
+
+    CharString test[10];
+    test[0] = L"膜原妈";
+    test[1] = L"哪知道";
+    test[2] = L"层内干扰";
+    test[3] = L"居世界领先水平";
+    test[4] = L"故障诊断程序";
+    test[5] = L"敌对势力";
+    test[6] = L"敏于事慎于言";
+    test[7] = L"救偏补弊";
+    test[8] = L"程序优先级";
+    test[9] = L"颞下颌关节功能紊乱综合征";
+
+    for (int i = 0; i < 9; i++) {
+        // hashTable.add(test[i]);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        std::cout << hashTable.find(test[i]) << std::endl;
+    }
 }

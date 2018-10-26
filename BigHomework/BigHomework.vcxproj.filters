@@ -36,9 +36,6 @@
     <ClInclude Include="NewsInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithm.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LabelType.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -46,6 +43,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CharStringHashTable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtractInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InitDictionary.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,10 +71,13 @@
     <ClCompile Include="NewsInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Algorithm.cpp">
+    <ClCompile Include="CharStringHashTable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CharStringHashTable.cpp">
+    <ClCompile Include="ExtractInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InitDictionary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

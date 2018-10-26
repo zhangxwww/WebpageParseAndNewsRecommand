@@ -259,6 +259,15 @@ std::wostream & operator<<(std::wostream & out, const CharString & cs) {
     return out;
 }
 
+std::wifstream & operator>>(std::wifstream & in, CharString & cs) {
+    std::locale loc(".936");
+    in.imbue(loc);
+    std::wstring wstr;
+    in >> wstr;
+    cs = wstr;
+    return in;
+}
+
 bool operator==(const CharString & cs1, const CharString & cs2) {
     int len1 = cs1.length();
     int len2 = cs2.length();

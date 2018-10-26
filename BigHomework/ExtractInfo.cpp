@@ -1,4 +1,4 @@
-#include "Algorithm.h"
+#include "ExtractInfo.h"
 
 #include <io.h>
 #include <fstream>

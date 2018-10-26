@@ -12,16 +12,15 @@ int main() {
 
     // Tester::testStack();
     // Tester::testCharString();
-    Tester::testCharStringLink();
+    // Tester::testCharStringLink();
     // Tester::testNewsInfo();
        
-    // Tester::testAlgorithm();
-
+    // Tester::testExtractInfo();
+    Tester::testInitDictionary();
     
     locale loc(".936");
     wcout.imbue(loc);
     int a = L'°¡';
-    
     
     return 0;
 }

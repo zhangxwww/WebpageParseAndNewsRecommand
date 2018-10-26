@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Algorithm.h" />
+    <ClInclude Include="ExtractInfo.h" />
     <ClInclude Include="CharString.h" />
     <ClInclude Include="CharStringHashTable.h" />
     <ClInclude Include="CharStringLink.h" />
     <ClInclude Include="CharStringLinkNode.h" />
     <ClInclude Include="InfoType.h" />
+    <ClInclude Include="InitDictionary.h" />
     <ClInclude Include="LabelType.h" />
     <ClInclude Include="NewsInfo.h" />
     <ClInclude Include="Stack.h" />
@@ -32,11 +33,12 @@
     <ClInclude Include="Tester.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Algorithm.cpp" />
+    <ClCompile Include="ExtractInfo.cpp" />
     <ClCompile Include="CharString.cpp" />
     <ClCompile Include="CharStringHashTable.cpp" />
     <ClCompile Include="CharStringLink.cpp" />
     <ClCompile Include="CharStringLinkNode.cpp" />
+    <ClCompile Include="InitDictionary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewsInfo.cpp" />
     <ClCompile Include="Tester.cpp" />

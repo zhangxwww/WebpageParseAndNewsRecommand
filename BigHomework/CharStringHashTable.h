@@ -7,15 +7,18 @@
 class CharStringHashTable {
 public:
     CharStringHashTable();
+    CharStringHashTable(const CharStringHashTable & csht);
     ~CharStringHashTable();
     void add(const CharString & cs);
     bool find(const CharString & cs);
 
+    const CharStringLink at(const int index) const;
+
 private:
-    int hash(const CharString & cs);
+    int hash(const CharString & cs) const;
 
     static const int HASH_SIZE = 1000003;
-    CharStringLink cslink[HASH_SIZE];
+    CharStringLink * cslinks;
 };
 
 #endif // !CHAR_STRING_HASH_TABLE_H
