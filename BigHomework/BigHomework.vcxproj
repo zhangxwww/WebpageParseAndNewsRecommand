@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DivideWords.h" />
     <ClInclude Include="ExtractInfo.h" />
     <ClInclude Include="CharString.h" />
     <ClInclude Include="CharStringHashTable.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Tester.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DivideWords.cpp" />
     <ClCompile Include="ExtractInfo.cpp" />
     <ClCompile Include="CharString.cpp" />
     <ClCompile Include="CharStringHashTable.cpp" />

@@ -22,7 +22,7 @@ void CharStringHashTable::add(const CharString & cs) {
     }
 }
 
-bool CharStringHashTable::find(const CharString & cs) {
+bool CharStringHashTable::find(const CharString & cs) const {
     int index = hash(cs);
     CharStringLinkNode * p = cslinks[index].getHead();
     while (p->getNext() != nullptr) {
@@ -34,7 +34,7 @@ bool CharStringHashTable::find(const CharString & cs) {
     return false;
 }
 
-const CharStringLink CharStringHashTable::at(const int index) const {
+const CharStringLink & CharStringHashTable::at(const int index) const {
     return cslinks[index];
 }
 

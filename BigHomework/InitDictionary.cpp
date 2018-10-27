@@ -14,7 +14,7 @@ CharStringHashTable initDictionary() {
     while (dictionary >> word) {
         hashTable.add(word);
         count++;
-        if (count % 1000 == 0) {
+        if (count % 10000 == 0) {
             std::cout << count << std::endl;
         }
     }

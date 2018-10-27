@@ -10,9 +10,9 @@ public:
     CharStringHashTable(const CharStringHashTable & csht);
     ~CharStringHashTable();
     void add(const CharString & cs);
-    bool find(const CharString & cs);
+    bool find(const CharString & cs) const;
 
-    const CharStringLink at(const int index) const;
+    const CharStringLink & at(const int index) const;
 
 private:
     int hash(const CharString & cs) const;

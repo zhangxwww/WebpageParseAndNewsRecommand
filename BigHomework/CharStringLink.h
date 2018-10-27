@@ -20,6 +20,7 @@ public:
     CharString getItem(int index);
     CharStringLinkNode * getHead() const;
     void operator= (const CharStringLink & csl);
+    void append(const CharStringLink & csl);
     friend std::wostream & operator<< (std::wostream & out,
         CharStringLink & csl);
 

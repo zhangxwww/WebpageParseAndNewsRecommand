@@ -13,6 +13,9 @@
 # DIC files
 *.dic
 
+# HASH files
+*.hash
+
 # User-specific files
 *.suo
 *.user
