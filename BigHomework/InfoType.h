@@ -6,7 +6,8 @@ enum InfoType {
     TITLE,
     TIME_AND_SOURCE,
     CONTENT,
-    NEW_PARAGRAPH
+    NEW_PARAGRAPH,
+    SKIP
 };
 
 #endif // !INFO_TYPE_H

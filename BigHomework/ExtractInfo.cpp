@@ -54,6 +54,7 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
     bool record = false;
     bool newParagraph = false;
     bool endOf = false;
+    bool skip = false;
 
     while (!HTMLfile.eof()) {
         std::getline(HTMLfile, line);
@@ -61,9 +62,8 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
             continue;
         }
         csLine = line;
-        parseLine(csLine, info, label, 
-            infoType, record, newParagraph,
-            endOf);
+        parseLine(csLine, info, label, infoType, 
+            record, newParagraph, endOf, skip);
         if (endOf) {
             break;
         }
@@ -80,7 +80,8 @@ void parseLine(const CharString & line,
     InfoType & infoType,
     bool & record,
     bool & newParagraph,
-    bool & endOf) {
+    bool & endOf, 
+    bool & skip) {
 
     int rightIndex = 0;
     bool isLabel = false;
@@ -105,7 +106,7 @@ void parseLine(const CharString & line,
 
         if (isLabel && rightIndex > 1) {
             CharString label = processedLine.subString(1, rightIndex).trim();
-            processLabel(label, labelStack, infoType, record, newParagraph);
+            processLabel(label, labelStack, infoType, record, newParagraph, skip);
         }
         else if (!isLabel) {
             CharString text;
@@ -115,7 +116,7 @@ void parseLine(const CharString & line,
             else {
                 text = processedLine.trim();
             }
-            if (record) {
+            if (record && !skip) {
                 processText(text, info, infoType, newParagraph, endOf);
             }
         }
@@ -155,7 +156,8 @@ void processLabel(const CharString & label,
     Stack<CharString>& labelStack,
     InfoType & infoType,
     bool & record,
-    bool & newParagraph) {
+    bool & newParagraph, 
+    bool & skip) {
 
     LabelType type = determineLabelType(label);
     bool startPairLabel = false;
@@ -164,12 +166,18 @@ void processLabel(const CharString & label,
         startPairLabel = (label[0] != L'/');
         if (startPairLabel) {
             labelStack.push(label);
+            InfoType info = parseStackTopLabel(label);
             if (!record) {
-                InfoType info = parseStackTopLabel(label);
                 if (info != NONE
-                    && info != NEW_PARAGRAPH) {
+                    && info != NEW_PARAGRAPH
+                    && info != SKIP) {
                     infoType = info;
                     record = true;
+                }
+            }
+            else {
+                if (info == SKIP) {
+                    skip = true;
                 }
             }
         }
@@ -185,6 +193,9 @@ void processLabel(const CharString & label,
                         if (record) {
                             newParagraph = true;
                         }
+                    }
+                    else if (info == SKIP) {
+                        skip = false;
                     }
                     else {
                         infoType = NONE;
@@ -202,6 +213,9 @@ void processLabel(const CharString & label,
                         if (record) {
                             newParagraph = true;
                         }
+                    }
+                    else if (info == SKIP) {
+                        skip = false;
                     }
                     else {
                         infoType = NONE;
@@ -302,6 +316,8 @@ InfoType parseStackTopLabel(const CharString & label) {
     CharString timeAndSourcePattern3;
     CharString contentPattern;
     CharString newParagraphPattern;
+    CharString stylePattern;
+    CharString scriptPattern;
 
     titlePattern = L"h1";
     timeAndSourcePattern1 = L"post_time_source";
@@ -309,6 +325,8 @@ InfoType parseStackTopLabel(const CharString & label) {
     timeAndSourcePattern3 = L"class=\"ptime\"";
     contentPattern = L"id=\"endText\"";
     newParagraphPattern = L"p";
+    stylePattern = L"style";
+    scriptPattern = L"script";
 
     if (label.indexOf(titlePattern) == 0) {
         return TITLE;
@@ -323,6 +341,10 @@ InfoType parseStackTopLabel(const CharString & label) {
     }
     else if (label.indexOf(newParagraphPattern) == 0) {
         return NEW_PARAGRAPH;
+    }
+    else if (label.indexOf(stylePattern) == 0
+        || label.indexOf(scriptPattern) == 0) {
+        return SKIP;
     }
     else {
         return NONE;
