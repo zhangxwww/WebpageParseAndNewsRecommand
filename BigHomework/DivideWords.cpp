@@ -3,27 +3,8 @@
 #include <io.h>
 #include <fstream>
 
-Stack<CharString> getInfoFileList() {
-    Stack<CharString> infoFileList;
-    CharString path;
-    path = L".\\output\\*.info";
-
-    long hFile = 0;
-    struct _wfinddata_t fileData;
-    const wchar_t * dirPath = path.wchar();
-    if ((hFile = _wfindfirst(dirPath, &fileData)) != -1) {
-        do {
-            CharString infoFilename;
-            infoFilename = fileData.name;
-            infoFileList.push(infoFilename);
-        } while (_wfindnext(hFile, &fileData) == 0);
-        _findclose(hFile);
-    }
-    return infoFileList;
-}
-
-const CharStringLink divideWordInOneInfoFile(
-    const CharString & infoFilename, 
+const CharStringLink divideWords(
+    const CharString & infoFilename,
     const CharStringHashTable & hashTable) {
 
     CharString filePath;
@@ -55,6 +36,40 @@ const CharStringLink divideWordInOneInfoFile(
     return dividedWords;
 }
 
+void divideWordsInAllFiles(const CharStringHashTable & hashTable) {
+
+    Stack<CharString> infoFileList = getInfoFileList();
+
+    std::cout << "Dividing ..." << std::endl;
+
+    while (!infoFileList.empty()) {
+        CharString infoFilename = infoFileList.top();
+        std::wcout << infoFilename << std::endl;
+        CharStringLink divideResults = divideWords(infoFilename, hashTable);
+        saveDividedWords(divideResults, infoFilename);
+        infoFileList.pop();
+    }
+}
+
+Stack<CharString> getInfoFileList() {
+    Stack<CharString> infoFileList;
+    CharString path;
+    path = L".\\output\\*.info";
+
+    long hFile = 0;
+    struct _wfinddata_t fileData;
+    const wchar_t * dirPath = path.wchar();
+    if ((hFile = _wfindfirst(dirPath, &fileData)) != -1) {
+        do {
+            CharString infoFilename;
+            infoFilename = fileData.name;
+            infoFileList.push(infoFilename);
+        } while (_wfindnext(hFile, &fileData) == 0);
+        _findclose(hFile);
+    }
+    return infoFileList;
+}
+
 const CharStringLink divideOneLine(
     const CharStringHashTable & hashTable, 
     const CharString & line) {
@@ -67,6 +82,7 @@ const CharStringLink divideOneLine(
             continue;
         }
         dividedLine.add(word);
+        start += word.length() - 1;
     } 
     return dividedLine;
 }
@@ -88,7 +104,9 @@ const CharString getNextWord(
         else {
             potentialWord = line.subString(start, start + wordLen);
         }
-        if (hashTable.find(potentialWord)) {
+        if (hashTable.find(potentialWord)
+            || isEnglishWords(potentialWord)
+            || isNumbers(potentialWord)) {
             match = true;
             break;
         }
@@ -97,7 +115,9 @@ const CharString getNextWord(
         potentialWord = line.subString(start, start + 1);
     }
     if (potentialWord.length() == 1) {
-        if (!isChineseCharacter(potentialWord)) {
+        if (!isChineseCharacter(potentialWord)
+            && !isEnglishWords(potentialWord)
+            && !isNumbers(potentialWord)) {
             potentialWord = L"";
         }
     }
@@ -112,10 +132,45 @@ bool isChineseCharacter(const CharString & cs) {
     return false;
 }
 
+bool isEnglishWords(const CharString & words) {
+    int len = words.length();
+    for (int i = 0; i < len; i++) {
+        if ((words[i] < L'A' || words[i] > L'Z')
+            && (words[i] < L'a' || words[i] > L'z')) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool isNumbers(const CharString & cs) {
+    int len = cs.length();
+    for (int i = 0; i < len; i++) {
+        if (cs[i] < L'0' || cs[i] > L'9') {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 void saveDividedWords(
     const CharStringLink & dividedWords, 
     const CharString & infoFilename) {
 
-    // TODO
+    CharString filePath;
+    filePath = L".\\output\\";
+    CharString postfix;
+    postfix = L".txt";
+
+    filePath.concat(infoFilename.
+        subString(0, infoFilename.indexOf(L".info")));
+    filePath.concat(postfix);
+
+    std::wofstream txtFile(filePath.wstring());
+    std::locale loc(".936");
+    txtFile.imbue(loc);
+
+    txtFile << dividedWords << std::endl;
+    txtFile.close();
 }

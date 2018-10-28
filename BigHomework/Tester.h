@@ -8,6 +8,7 @@
 #include "NewsInfo.h"
 #include "ExtractInfo.h"
 #include "InitDictionary.h"
+#include "DivideWords.h"
 
 #include <iostream>
 
@@ -19,6 +20,7 @@ public:
     static void testNewsInfo();
     static void testExtractInfo();
     static void testInitDictionary();
+    static void testDivideWords();
 private:
     explicit Tester() {};
 };

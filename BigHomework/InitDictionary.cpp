@@ -11,6 +11,9 @@ CharStringHashTable initDictionary() {
 
     CharString word;
     int count = 0;
+
+    std::cout << "Start to init dictionary ..." << std::endl;
+
     while (dictionary >> word) {
         hashTable.add(word);
         count++;

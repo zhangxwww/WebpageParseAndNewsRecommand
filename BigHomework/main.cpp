@@ -15,9 +15,10 @@ int main() {
     // Tester::testCharStringLink();
     // Tester::testNewsInfo();
        
-    // Tester::testExtractInfo();
+    Tester::testExtractInfo();
     // Tester::testInitDictionary();
-    
+    Tester::testDivideWords();
+    /*
     locale loc(".936");
     wcout.imbue(loc);
     int a = L'°¡';
@@ -25,6 +26,8 @@ int main() {
     wchar_t c = 0x9fa5;
     wcout << b << endl;
     wcout << c << endl;
+    */
+    
     // cout << (L'¹þ' > 0x4e00) << endl;
 
     return 0;

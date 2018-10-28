@@ -202,4 +202,11 @@ void Tester::testInitDictionary() {
     for (int i = 0; i < 10; i++) {
         std::cout << hashTable.find(test[i]) << std::endl;
     }
+
+    
+}
+
+void Tester::testDivideWords() {
+    CharStringHashTable hashTable = initDictionary();
+    divideWordsInAllFiles(hashTable);
 }

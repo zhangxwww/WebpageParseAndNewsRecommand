@@ -6,6 +6,8 @@
 void extractInfo() {
     Stack<CharString> HTMLlist = getHTMLList();
 
+    std::cout << "Extract info from ..." << std::endl;
+
     while (!HTMLlist.empty()) {
         CharString HTMLfilename = HTMLlist.top();
         std::wcout << HTMLfilename << std::endl;

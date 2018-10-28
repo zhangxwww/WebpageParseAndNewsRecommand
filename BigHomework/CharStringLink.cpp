@@ -166,7 +166,9 @@ void CharStringLink::append(const CharStringLink & csl) {
     }
 }
 
-std::wostream & operator<<(std::wostream & out, CharStringLink & csl) {
+std::wostream & operator<<(std::wostream & out, 
+    const CharStringLink & csl) {
+
     CharStringLinkNode * pos = csl.getHead();
     while (pos->getNext() != nullptr) {
         pos = pos->getNext();
