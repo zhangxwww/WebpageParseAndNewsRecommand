@@ -30,6 +30,7 @@ int CharString::indexOf(const wchar_t w) const {
 }
 
 int CharString::indexOf(const CharString & cstr) const {
+    // 这里应用了KMT算法
     int cLen = cstr.length();
     if (cLen > len) {
         return -1;
@@ -52,17 +53,6 @@ int CharString::indexOf(const CharString & cstr) const {
     else {
         return -1;
     }
-}
-
-int CharString::indexOf(const char c) const {
-    const wchar_t w = c;
-    return indexOf(w);
-}
-
-int CharString::indexOf(const std::wstring & wstr) const {
-    CharString cs;
-    cs = wstr;
-    return indexOf(cs);
 }
 
 const int CharString::length() const {
@@ -100,6 +90,7 @@ CharString CharString::trim() {
     if (len > 0) {
         int leftIndex = 0;
         int rightIndex = len;
+        // 分别从首尾开始遍历，去掉空白字符直到找到非空白的字符
         for (int i = 0; i < len - 1; i++) {
             if (items[i] != L' ' && items[i] != L'\t') {
                 leftIndex = i;
@@ -131,10 +122,10 @@ bool CharString::blank() const {
 }
 
 CharString CharString::subString(const int startPos, const int endPos) const {
-    if (startPos < 0 || endPos > len) {
+    if (startPos < 0 || endPos > len) { // 参数合法性检验
         throw ERROR;
     }
-    if (startPos >= endPos) {
+    if (startPos >= endPos) { // 参数合法性检验
         throw ERROR;
     }
     int newLen = endPos - startPos;
@@ -152,7 +143,7 @@ CharString CharString::subString(const int startPos) const {
 void CharString::concat(const CharString & cstr) {
     int cstrLen = cstr.length();
     int newSize = maxSize;
-    if (cstrLen + len >= newSize - 1) {
+    if (cstrLen + len >= newSize - 1) { // 拼接后长度超出当前分配的空间
         while (cstrLen + len >= newSize) {
             newSize += INCREMENT;
         }
@@ -171,7 +162,7 @@ void CharString::concat(const CharString & cstr) {
 }
 
 void CharString::concat(const wchar_t w) {
-    if (len == maxSize - 1) {
+    if (len == maxSize - 1) { // 拼接后长度超出当前分配的空间
         maxSize += INCREMENT;
         wchar_t * newItems = new wchar_t[maxSize + 1];
         for (int i = 0; i < len; i++) {
@@ -185,15 +176,9 @@ void CharString::concat(const wchar_t w) {
     items[len] = L'\0';
 }
 
-void CharString::concat(const wchar_t * pw) {
-    CharString tmp;
-    tmp = pw;
-    concat(tmp);
-}
-
 void CharString::operator=(const CharString & cstr) {
     int cLen = cstr.length();
-    if (cLen) {
+    if (cLen) { // cstr为非空字符串
         maxSize = cLen + INCREMENT;
         delete[] items;
         items = new wchar_t[maxSize + 1];
@@ -204,7 +189,7 @@ void CharString::operator=(const CharString & cstr) {
         }
         items[len] = L'\0';
     }
-    else {
+    else { // cstr为空字符串
         len = 0;
         maxSize = INIT_SIZE;
         delete[] items;
@@ -215,7 +200,7 @@ void CharString::operator=(const CharString & cstr) {
 
 void CharString::operator=(const std::wstring & wstr) {
     int sLen = wstr.length();
-    if (sLen) {
+    if (sLen) { // wstr为非空字符串
         maxSize = sLen + INCREMENT;
         delete[] items;
         items = new wchar_t[maxSize + 1];
@@ -226,8 +211,7 @@ void CharString::operator=(const std::wstring & wstr) {
         }
         items[len] = L'\0';
     }
-    else {
-
+    else { // wstr为空字符串
         len = 0;
         maxSize = INIT_SIZE;
         delete[] items;
@@ -237,20 +221,23 @@ void CharString::operator=(const std::wstring & wstr) {
 }
 
 wchar_t & CharString::operator[](const int index) {
-    if (index >= len) {
+    if (index >= len
+        || index < 0) { // 访问越界
         throw ERROR;
     }
     return items[index];
 }
 
 wchar_t & CharString::operator[](const int index) const {
-    if (index >= len) {
+    if (index >= len
+        || index < 0) { // 访问越界
         throw ERROR;
     }
     return items[index];
 }
 
 std::wostream & operator<<(std::wostream & out, const CharString & cs) {
+    // 设置代码页936
     std::locale loc(".936");
     out.imbue(loc);
     for (int i = 0; i < cs.length(); i++) {
@@ -260,6 +247,7 @@ std::wostream & operator<<(std::wostream & out, const CharString & cs) {
 }
 
 std::wifstream & operator>>(std::wifstream & in, CharString & cs) {
+    // 设置代码页936
     std::locale loc(".936");
     in.imbue(loc);
     std::wstring wstr;

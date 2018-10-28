@@ -50,7 +50,7 @@ void CharStringLink::add(const CharString cs) {
 }
 
 void CharStringLink::add(const CharString cs, int index) {
-    if (index<0 || index>len) {
+    if (index<0 || index>len) { // 非法参数
         throw ERROR;
     }
     CharStringLinkNode * csln = new CharStringLinkNode(cs);
@@ -64,7 +64,7 @@ void CharStringLink::add(const CharString cs, int index) {
 }
 
 bool CharStringLink::remove(const int index) {
-    if (index >= len || index < 0) {
+    if (index >= len || index < 0) { // 非法参数
         return false;
     }
     curPos = head;
@@ -114,25 +114,12 @@ int CharStringLink::length() const {
     return len;
 }
 
-CharString CharStringLink::getItem(int index) {
-    if (index >= len) {
-        throw ERROR;
-    }
-    if (index < curIndex) {
-        curIndex = 0;
-        curPos = head->getNext();
-    }
-    for (; curIndex < index; curIndex++) {
-        curPos = curPos->getNext();
-    }
-    return curPos->getCharString();
-}
-
 CharStringLinkNode * CharStringLink::getHead() const {
     return head;
 }
 
 void CharStringLink::operator=(const CharStringLink & csl) {
+    // 首先清空当前链表  
     curPos = head->getNext();
     while (curPos != nullptr) {
         delete head;
@@ -146,6 +133,7 @@ void CharStringLink::operator=(const CharStringLink & csl) {
     len = csl.length();
     curIndex = 0;
 
+    // 然后利用csl中的每一个结点的信息构造新的结点，并添加在链表末尾
     CharStringLinkNode * cslPos = csl.getHead()->getNext();
     while (cslPos != nullptr) {
         CharString cs = cslPos->getCharString();

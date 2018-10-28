@@ -3,40 +3,7 @@
 #include <io.h>
 #include <fstream>
 
-void extractInfo() {
-    Stack<CharString> HTMLlist = getHTMLList();
-
-    std::cout << "Extract info from ..." << std::endl;
-
-    while (!HTMLlist.empty()) {
-        CharString HTMLfilename = HTMLlist.top();
-        std::wcout << HTMLfilename << std::endl;
-        NewsInfo newsInfo = parseOneNewsPage(HTMLfilename);
-        saveNewsInfo(newsInfo, HTMLfilename);
-        HTMLlist.pop();
-    }
-}
-
-Stack<CharString> getHTMLList() {
-    Stack<CharString> HTMLlist;
-    CharString path;
-    path = L".\\input\\*.html";
-
-    long hFile = 0;
-    struct _wfinddata_t fileData;
-    const wchar_t * dirPath = path.wchar();
-    if ((hFile = _wfindfirst(dirPath, &fileData)) != -1) {
-        do {
-            CharString HTMLname;
-            HTMLname = fileData.name;
-            HTMLlist.push(HTMLname);
-        } while (_wfindnext(hFile, &fileData) == 0);
-        _findclose(hFile);
-    }
-    return HTMLlist;
-}
-
-const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
+const NewsInfo extractInfo(const CharString & HTMLfilename) {
     CharString filePath;
     filePath = L".\\input\\";
     filePath.concat(HTMLfilename);
@@ -62,7 +29,7 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
             continue;
         }
         csLine = line;
-        parseLine(csLine, info, label, infoType, 
+        parseLine(csLine, info, label, infoType,
             record, newParagraph, endOf, skip);
         if (endOf) {
             break;
@@ -72,6 +39,41 @@ const NewsInfo parseOneNewsPage(const CharString & HTMLfilename) {
 
     info.postProcess();
     return info;
+}
+
+Stack<CharString> getHTMLList() {
+    Stack<CharString> HTMLlist;
+    CharString path;
+    path = L".\\input\\*.html";
+
+    long hFile = 0;
+    struct _wfinddata_t fileData;
+    const wchar_t * dirPath = path.wchar();
+    if ((hFile = _wfindfirst(dirPath, &fileData)) != -1) {
+        do {
+            CharString HTMLname;
+            HTMLname = fileData.name;
+            HTMLlist.push(HTMLname);
+        } while (_wfindnext(hFile, &fileData) == 0);
+        _findclose(hFile);
+    }
+    return HTMLlist;
+}
+
+void extractInfoInAllPages() {
+    // 获取所有的.html文件名
+    Stack<CharString> HTMLlist = getHTMLList();
+
+    std::cout << "Extract info from ..." << std::endl;
+
+    while (!HTMLlist.empty()) {
+        // 对栈顶文件进行解析，并弹出
+        CharString HTMLfilename = HTMLlist.top();
+        std::wcout << HTMLfilename << std::endl;
+        NewsInfo newsInfo = extractInfo(HTMLfilename);
+        saveNewsInfo(newsInfo, HTMLfilename);
+        HTMLlist.pop();
+    }
 }
 
 void parseLine(const CharString & line,
@@ -88,11 +90,12 @@ void parseLine(const CharString & line,
     CharString processedLine = line;
 
     while (true) {
-
+        // 如果是标签，则应该以 < 开始
         if (processedLine[0] == L'<') {
             rightIndex = processedLine.indexOf(L'>');
             isLabel = true;
         }
+        // 否则是文本
         else {
             rightIndex = processedLine.indexOf(L'<');
             isLabel = false;
@@ -104,10 +107,12 @@ void parseLine(const CharString & line,
             breakLater = true;
         }
 
+        // 提取出标签，并进行处理
         if (isLabel && rightIndex > 1) {
             CharString label = processedLine.subString(1, rightIndex).trim();
             processLabel(label, labelStack, infoType, record, newParagraph, skip);
         }
+        // 提取出文本，并进行处理
         else if (!isLabel) {
             CharString text;
             if (rightIndex > 0) {
@@ -121,6 +126,7 @@ void parseLine(const CharString & line,
             }
         }
 
+        // 当前行去掉已经处理过的内容，对余下部分进行上述的处理
         if (isLabel && rightIndex + 1 < processedLine.length()
             && rightIndex > 0) {
             processedLine = processedLine.subString(rightIndex + 1).trim();
@@ -164,9 +170,11 @@ void processLabel(const CharString & label,
     switch (type) {
     case PAIR:
         startPairLabel = (label[0] != L'/');
+        // 如果这个标签是一对标签中开始的那一个
         if (startPairLabel) {
             labelStack.push(label);
             InfoType info = parseStackTopLabel(label);
+            // 如果当前没有记录，并且读到了开始记录有关的标签
             if (!record) {
                 if (info != NONE
                     && info != NEW_PARAGRAPH
@@ -181,7 +189,9 @@ void processLabel(const CharString & label,
                 }
             }
         }
+        // 如果这个标签是一对标签中结束的那一个
         else {
+            // 将不匹配且优先级更低的标签全部弹出
             while (!labelStack.empty()
                 && !labelMatch(labelStack.top(), label)
                 && !labelPriorer(labelStack.top(), label)) {
@@ -204,6 +214,7 @@ void processLabel(const CharString & label,
                     
                 }
             }
+            // 将匹配的标签弹出
             if (!labelStack.empty()
                 && labelMatch(labelStack.top(), label)) {
                 InfoType info = parseStackTopLabel(labelStack.top());
@@ -225,8 +236,10 @@ void processLabel(const CharString & label,
             }
         }
         break;
+    // 如果标签是单独一个的，则什么都不干
     case SINGLE:
         break;
+    // 如果标签是注释的，则什么都不干
     case NOTATION:
         break;
     default:
@@ -240,6 +253,7 @@ void processText(CharString & text,
     bool & newParagraph,
     bool & endOf) {
 
+    // 对不同的标签类型做不同的处理
     switch (infoType) {
     case TITLE:
         info.setTitle(text);
@@ -278,15 +292,19 @@ bool filtText(CharString & text, bool & endOf) {
     entityName[4] = L"&quot;";
     entityName[5] = L"&apos;";
 
+    // 去掉正文最后的“本文来源”和“责任编辑”句
     if (text.indexOf(filter1) != -1
         || text.indexOf(filter2) != -1) {
         endOf = true;
         return false;
     }
+    
+    // 去掉空白行
     if (text.blank()) {
         return false;
     }
 
+    // 去掉html实体字符
     for (int i = 0; i < 6; i++) {
         while (true) {
             int entityStart = text.indexOf(entityName[i]);
@@ -376,9 +394,11 @@ void saveNewsInfo(const NewsInfo & newsInfo,
     filePath = L".\\output\\";
     CharString postfix;
     postfix = L".info";
+    CharString HTMLfilePostfix;
+    HTMLfilePostfix = L".html";
 
     filePath.concat(HTMLfilename.
-        subString(0, HTMLfilename.indexOf(L".html")));
+        subString(0, HTMLfilename.indexOf(HTMLfilePostfix)));
     filePath.concat(postfix);
 
     std::wofstream infoFile(filePath.wstring());

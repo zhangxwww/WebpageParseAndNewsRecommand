@@ -176,7 +176,7 @@ void Tester::testNewsInfo() {
 }
 
 void Tester::testExtractInfo() {
-    extractInfo();
+    extractInfoInAllPages();
 }
 
 void Tester::testInitDictionary() {
