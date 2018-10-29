@@ -9,7 +9,6 @@
 class NewsInfo {
 public:
     NewsInfo();
-    ~NewsInfo();
 
     /**
      *  …Ë÷√±ÍÃ‚

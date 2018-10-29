@@ -52,6 +52,9 @@ void divideWordsInAllFiles(const CharStringHashTable & hashTable) {
         CharStringLink divideResults = divideWords(infoFilename, hashTable);
         infoFileList.pop();
     }
+
+    std::cout << "Finish dividing!" << std::endl;
+    std::cout << std::endl;
 }
 
 Stack<CharString> getInfoFileList() {

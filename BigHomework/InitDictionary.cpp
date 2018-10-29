@@ -23,5 +23,8 @@ CharStringHashTable initDictionary() {
     }
     dictionary.close();
 
+    std::cout << "Finish init!" << std::endl;
+    std::cout << std::endl;
+
     return hashTable;
 }

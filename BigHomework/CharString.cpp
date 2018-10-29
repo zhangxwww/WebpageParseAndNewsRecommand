@@ -30,7 +30,7 @@ int CharString::indexOf(const wchar_t w) const {
 }
 
 int CharString::indexOf(const CharString & cstr) const {
-    // 这里应用了KMT算法
+    // 这里应用了KMP算法
     int cLen = cstr.length();
     if (cLen > len) {
         return -1;

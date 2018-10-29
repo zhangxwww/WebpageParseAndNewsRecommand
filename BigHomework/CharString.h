@@ -79,7 +79,7 @@ public:
     /********** 以下几个函数为为了方便而添加的函数 **********/
 
     /**
-     *  获得KMT算法中的next数组
+     *  获得KMP算法中的next数组
      *  @return: 计算得到的next数组
      */
     int * getNext() const;

@@ -3,9 +3,6 @@
 NewsInfo::NewsInfo() {
 }
 
-NewsInfo::~NewsInfo() {
-}
-
 void NewsInfo::setTitle(const CharString & title) {
     this->title = title;
 }

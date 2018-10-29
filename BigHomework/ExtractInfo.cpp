@@ -74,6 +74,9 @@ void extractInfoInAllPages() {
         saveNewsInfo(newsInfo, HTMLfilename);
         HTMLlist.pop();
     }
+
+    std::cout << "Finish extracting!" << std::endl;
+    std::cout << std::endl;
 }
 
 void parseLine(const CharString & line,
