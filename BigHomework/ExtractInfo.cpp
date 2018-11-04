@@ -46,7 +46,7 @@ Stack<CharString> getHTMLList() {
     CharString path;
     path = L".\\input\\*.html";
 
-    long hFile = 0;
+    intptr_t hFile = 0;
     struct _wfinddata_t fileData;
     const wchar_t * dirPath = path.wchar();
     if ((hFile = _wfindfirst(dirPath, &fileData)) != -1) {
