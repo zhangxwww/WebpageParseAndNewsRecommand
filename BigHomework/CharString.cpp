@@ -47,6 +47,7 @@ int CharString::indexOf(const CharString & cstr) const {
             j = next[j];
         }
     }
+    delete[] next;
     if (j >= cLen) {
         return i - cLen;
     }
@@ -60,7 +61,7 @@ const int CharString::length() const {
 }
 
 int * CharString::getNext() const {
-    int * next = new int[len];
+    int * next = new int[len + 2];
     int j = 0;
     next[0] = -1;
     int k = -1;

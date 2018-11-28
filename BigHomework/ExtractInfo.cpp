@@ -90,8 +90,12 @@ void parseLine(const CharString & line,
 
     int rightIndex = 0;
     bool isLabel = false;
+    
     CharString processedLine = line;
-
+    // 如果这一行过长，如超过100000字符，则进行一遍过滤，去掉无用注释
+    if (processedLine.length() > 100000) {
+        processedLine = filtNotation(processedLine);
+    }
     while (true) {
         // 如果是标签，则应该以 < 开始
         if (processedLine[0] == L'<') {
@@ -146,6 +150,27 @@ void parseLine(const CharString & line,
             break;
         }
     }
+}
+
+CharString filtNotation(const CharString & line) {
+    CharString startNotation;
+    CharString endNotation;
+    startNotation = L"<!--";
+    endNotation = L"-->";
+    CharString left;
+    CharString right;
+    left = L"";
+    right = L"";
+    int startPos = line.indexOf(startNotation);
+    int endPos = line.indexOf(endNotation) + 2;
+    if (startPos > 0) {
+        left = line.subString(0, startPos);
+    }
+    if (endPos < line.length() - 2) {
+        right = line.subString(endPos + 1);
+    }
+    left.concat(right);
+    return left;
 }
 
 LabelType determineLabelType(const CharString & label) {

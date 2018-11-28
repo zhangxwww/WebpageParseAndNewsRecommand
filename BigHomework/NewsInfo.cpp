@@ -37,6 +37,9 @@ void NewsInfo::postProcess() {
     title = title.trim();
     time = time.trim();
     source = source.trim();
+    if (content.length() == 0) {
+        return;
+    }
     content = content.trim();
     if (content[0] == L'\n') {
         content = content.subString(1);

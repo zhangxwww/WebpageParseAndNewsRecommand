@@ -49,6 +49,12 @@ void parseLine(const CharString & line,
     bool & endOf, 
     bool & skip);
 
+/**
+ *  将较长的一行中的注释去掉
+ *  @param line: 所要处理的行
+ *  @return    : 经过处理的行
+ */
+CharString filtNotation(const CharString & line);
 
 /**
  *  确定某一标签的类型

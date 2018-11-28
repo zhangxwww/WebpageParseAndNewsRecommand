@@ -2,6 +2,8 @@
 #include "InitDictionary.h"
 #include "DivideWords.h"
 
+#include "Tester.h"
+
 #include <iostream>
 
 using namespace std;
