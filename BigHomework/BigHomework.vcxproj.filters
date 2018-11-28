@@ -54,6 +54,15 @@
     <ClInclude Include="DivideWords.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BalancedBinaryTreeNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InvertedFileLinkNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BalancedBinaryTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -84,6 +93,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DivideWords.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BalancedBinaryTreeNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InvertedFileLinkNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BalancedBinaryTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

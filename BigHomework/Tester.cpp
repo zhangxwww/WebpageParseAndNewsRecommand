@@ -23,95 +23,22 @@ void Tester::testStack() {
 }
 
 void Tester::testCharString() {
-    /*
-    CharString cs;
-    cs = L"匯屈眉膨";
-    std::wcout << cs << std::endl;
-
+    std::locale loc(".936");
+    std::wcout.imbue(loc);
     CharString cs1;
     CharString cs2;
-    cs1 = L"込込込";
-    cs2 = cs1;
-    cs1 = cs;
-    std::wcout << cs1 << " " << cs1.length() << std::endl;
-    std::wcout << cs2 << " " << cs2.length() << std::endl;
-    cs1.concat(cs2);
-    wchar_t w = L'亜';
-    cs1.concat(w);
-    for (int i = 0; i < 20; i++) {
-        cs1.concat(cs2);
-    }
-    cs2 = cs1;
-    std::wcout << cs2 << " " << cs2.length() << std::endl;
-    CharString cs3 = cs1.subString(2, 4);
-
-    std::wcout << cs3 << " " << cs3.length() << std::endl;
-
+    CharString cs3;
     CharString cs4;
-    cs4 = L"abcac";
-    int * next = cs4.getNext();
-    int len = cs4.length();
-    for (int i = 0; i < len; i++) {
-        std::wcout << i << " " << cs4[i] << " " << next[i] << std::endl;
-    }
-
-    std::wcout << cs1 << std::endl;
-    std::wcout << cs3 << std::endl;
-    std::wstring ws = L"屈眉";
-    CharString cs5;
-    cs5 = L"弔圻第";
-    CharString cs6(cs5);
-    std::wcout << cs1.indexOf(ws) << std::endl;
-    std::wcout << cs1.indexOf(cs5) << std::endl;
-
-    CharString cs7;
-    cs7.concat(cs6);
-    cs7.concat(cs6);
-    std::wcout << cs7 << cs7.length() << std::endl;
-    std::wcout << cs7.subString(5) << std::endl;
-    */
-    int count = 0;
-    CharString cs8;
-    cs8 = L"込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込"
-        "込込込込込込込込込込込込込込込込込込込込込込";
-    CharString cs;
-    cs = L"123";
-    while (true) {
-        cs8.indexOf(cs);
-        count++;
-        if (count % 10000 == 0) {
-            std::cout << count << std::endl;
-        }
-    }
-    /*
-    CharString cs9;
-    cs9 = L"込込込";
-    CharString cs10;
-    cs10 = L"込";
-    cs8 = cs9;
-    std::wcout << cs8 << std::endl;
-    cs8 = cs10;
-    std::wcout << cs8 << std::endl;
-    */
-    // std::wcout << cs8.trim() << std::endl;
+    cs1 = L"込";
+    cs2 = L"亜";
+    cs3 = L"亜";
+    cs4 = L"亜亜";
+    std::wcout << cs1 << " " << cs2 << " " << (cs1 < cs2) << std::endl;
+    std::wcout << cs1 << " " << cs3 << " " << (cs1 < cs3) << std::endl;
+    std::wcout << cs1 << " " << cs4 << " " << (cs1 < cs4) << std::endl;
+    std::wcout << cs1 << " " << cs2 << " " << (cs1 <= cs2) << std::endl;
+    std::wcout << cs1 << " " << cs3 << " " << (cs1 <= cs3) << std::endl;
+    std::wcout << cs1 << " " << cs4 << " " << (cs1 <= cs4) << std::endl;
 }
 
 void Tester::testCharStringLink() {

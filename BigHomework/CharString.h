@@ -166,6 +166,23 @@ public:
     friend bool operator== (const CharString & cs1,
         const CharString & cs2);
 
+    /**
+     *  重载 < 号
+     *  @param cs1: 用于比较的CharString
+     *  @param cs2: 用于比较的CharString
+     *  @return   : cs1 < cs2则返回true，否则返回false
+     */
+    friend bool operator< (const CharString & cs1,
+        const CharString & cs2);
+
+    /**
+     *  重载 <= 号
+     *  @param cs1: 用于比较的CharString
+     *  @param cs2: 用于比较的CharString
+     *  @return   : cs1 <= cs2则返回true，否则返回false
+     */
+    friend bool operator<= (const CharString & cs1,
+        const CharString & cs2);
 
 private:
     /* 字符串初始分配的空间 */

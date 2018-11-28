@@ -15,9 +15,9 @@ int main() {
      *  extractInfo函数，具体情况可以参见
      *  ExtractInfo.h中的代码
      */
-    extractInfoInAllPages();
+    // extractInfoInAllPages();
 
-    CharStringHashTable hashTable = initDictionary();
+    // CharStringHashTable hashTable = initDictionary();
 
     /** 
      *  为了本次作业的展示方便起见，我在这里通过
@@ -25,7 +25,8 @@ int main() {
      *  divideWords函数，具体情况可以参见
      *  DivideWords.h中的代码
      */
-    divideWordsInAllFiles(hashTable);
+    // divideWordsInAllFiles(hashTable);
+    Tester::testCharString();
 
     return 0;
 }

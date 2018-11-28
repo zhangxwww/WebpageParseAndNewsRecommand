@@ -270,3 +270,22 @@ bool operator==(const CharString & cs1, const CharString & cs2) {
     }
     return true;
 }
+
+bool operator<(const CharString & cs1, const CharString & cs2) {
+    int len1 = cs1.length();
+    int len2 = cs2.length();
+    int i = 0;
+    for (; i < len1 && i < len2; i++) {
+        if (cs1[i] < cs2[i]) {
+            return true;
+        }
+    }
+    if (i == len1 && i < len2) {
+        return true;
+    }
+    return false;
+}
+
+bool operator<=(const CharString & cs1, const CharString & cs2) {
+    return cs1 < cs2 || cs1 == cs2;
+}
