@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="BalancedBinaryTree.h" />
     <ClInclude Include="BalancedBinaryTreeNode.h" />
+    <ClInclude Include="BalancedFactor.h" />
     <ClInclude Include="DivideWords.h" />
     <ClInclude Include="ExtractInfo.h" />
     <ClInclude Include="CharString.h" />

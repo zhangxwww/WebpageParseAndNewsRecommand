@@ -26,7 +26,9 @@ int main() {
      *  DivideWords.hÖĞµÄ´úÂë
      */
     // divideWordsInAllFiles(hashTable);
-    Tester::testCharString();
+
+
+    Tester::testBalancedBinaryTree();
 
     return 0;
 }

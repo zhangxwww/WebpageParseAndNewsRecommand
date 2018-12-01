@@ -166,3 +166,22 @@ void Tester::testDivideWords() {
     CharStringHashTable hashTable = initDictionary();
     divideWordsInAllFiles(hashTable);
 }
+
+void Tester::testBalancedBinaryTree() {
+    BalancedBinaryTree * tree = new BalancedBinaryTree;
+    CharString words[10];
+    words[0] = L"1";
+    words[1] = L"3";
+    words[2] = L"2";
+    words[3] = L"3";
+    words[4] = L"1";
+    words[5] = L"5";
+    words[6] = L"4";
+    words[7] = L"0";
+    words[8] = L"2";
+    words[9] = L"7";
+    for (int i = 0; i < 10; i++) {
+        bool taller = false;
+        tree->insert(tree->getRoot(), words[i], taller);
+    }
+}

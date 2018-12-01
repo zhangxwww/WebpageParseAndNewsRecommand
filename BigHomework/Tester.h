@@ -9,6 +9,7 @@
 #include "ExtractInfo.h"
 #include "InitDictionary.h"
 #include "DivideWords.h"
+#include "BalancedBinaryTree.h"
 
 #include <iostream>
 
@@ -21,6 +22,7 @@ public:
     static void testExtractInfo();
     static void testInitDictionary();
     static void testDivideWords();
+    static void testBalancedBinaryTree();
 private:
     explicit Tester() {};
 };
