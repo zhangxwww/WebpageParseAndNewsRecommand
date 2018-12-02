@@ -22,7 +22,7 @@ void InvertedFileLinkList::add(const int docID) {
     bbtNode->totalIncrease();
     InvertedFileLinkNode * p = search(docID);
     // 当前链表中没有对应文档
-    if (p->getID == -1) {  
+    if (p->getID() == -1) {  
         InvertedFileLinkNode * doc = new InvertedFileLinkNode(docID);
         doc->setNext(p);
         doc->setPrev(p->getPrev());
@@ -55,8 +55,8 @@ InvertedFileLinkNode * InvertedFileLinkList::search(
     const int docID) const {
 
     InvertedFileLinkNode * p = head->getNext();
-    while (p->getID != -1) {
-        if (p->getID == docID) {
+    while (p->getID() != -1) {
+        if (p->getID() == docID) {
             break;
         }
         p = p->getNext();
@@ -69,7 +69,7 @@ bool InvertedFileLinkList::edit(
 
     InvertedFileLinkNode * p = search(preID);
     // 没有找到
-    if (p->getID == -1) {
+    if (p->getID() == -1) {
         return false;
     }
     else {
@@ -81,7 +81,7 @@ bool InvertedFileLinkList::edit(
 bool InvertedFileLinkList::remove(const int docID) {
     InvertedFileLinkNode * p = search(docID);
     // 没有找到
-    if (p->getID == -1) {
+    if (p->getID() == -1) {
         return false;
     }
     else {
