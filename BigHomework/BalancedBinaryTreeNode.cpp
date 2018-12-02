@@ -1,12 +1,21 @@
 #include "BalancedBinaryTreeNode.h"
+#include "InvertedFileLinkList.h"
 
 BalancedBinaryTreeNode::BalancedBinaryTreeNode(const CharString & term)
     : term(term), countOfRelatedDocs(0), totalOccur(0),
-    left(nullptr), right(nullptr), head(nullptr), bf(EH) {
+    left(nullptr), right(nullptr), list(nullptr), bf(EH) {
 
+    list = new InvertedFileLinkList(this);
 }
 
 BalancedBinaryTreeNode::~BalancedBinaryTreeNode() {
+    delete list;
+    if (left != nullptr) {
+        delete left;
+    }
+    if (right != nullptr) {
+        delete right;
+    }
 }
 
 BalancedBinaryTreeNode * & BalancedBinaryTreeNode::getLeft() {
@@ -35,4 +44,12 @@ void BalancedBinaryTreeNode::setBalancedFactor(BalancedFactor bf) {
 
 const CharString & BalancedBinaryTreeNode::getTerm() const {
     return term;
+}
+
+void BalancedBinaryTreeNode::docIncrease() {
+    countOfRelatedDocs++;
+}
+
+void BalancedBinaryTreeNode::totalIncrease() {
+    totalOccur++;
 }

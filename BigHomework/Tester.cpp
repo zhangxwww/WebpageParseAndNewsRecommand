@@ -168,27 +168,33 @@ void Tester::testDivideWords() {
 }
 
 void Tester::testBalancedBinaryTree() {
-    BalancedBinaryTree * tree = new BalancedBinaryTree;
-    CharString words[10];
-    words[0] = L"9";
-    words[1] = L"8";
-    words[2] = L"6";
-    words[3] = L"3";
-    words[4] = L"1";
-    words[5] = L"5";
-    words[6] = L"4";
-    words[7] = L"0";
-    words[8] = L"2";
-    words[9] = L"7";
-    for (int i = 0; i < 10; i++) {
-        bool taller = false;
-        tree->insert(tree->getRoot(), words[i], taller);
+    for (int i = 0;; i++) {
+        BalancedBinaryTree * tree = new BalancedBinaryTree;
+        CharString words[10];
+        words[0] = L"9";
+        words[1] = L"8";
+        words[2] = L"6";
+        words[3] = L"3";
+        words[4] = L"1";
+        words[5] = L"5";
+        words[6] = L"4";
+        words[7] = L"0";
+        words[8] = L"2";
+        words[9] = L"7";
+        for (int i = 0; i < 10; i++) {
+            bool taller = false;
+            tree->insert(tree->getRoot(), words[i], taller);
+        }
+        BalancedBinaryTreeNode * bbtn;
+        for (int i = 0; i < 10; i++) {
+            tree->search(tree->getRoot(), words[i], nullptr, bbtn);
+        }
+        CharString newword;
+        newword = L"34";
+        tree->search(tree->getRoot(), newword, nullptr, bbtn);
+        delete tree;
+        if (i % 10000 == 0) {
+            std::cout << i << std::endl;
+        }
     }
-    BalancedBinaryTreeNode * bbtn;
-    for(int i=0;i < 10; i++) {
-        tree->search(tree->getRoot(), words[i], nullptr, bbtn);
-    }
-    CharString newword;
-    newword = L"34";
-    tree->search(tree->getRoot(), newword, nullptr, bbtn);
 }

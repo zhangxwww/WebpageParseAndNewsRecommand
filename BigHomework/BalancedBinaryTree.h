@@ -22,6 +22,7 @@ public:
         const CharString & term,
         bool & taller);
 
+
     /**
      *  平衡二叉树的搜索
      *  @param root  : 当前查找的树的根结点
@@ -34,6 +35,7 @@ public:
         const CharString & key, 
         BalancedBinaryTreeNode * parent, 
         BalancedBinaryTreeNode * & p);
+
 
     /**
      *  调整平衡二叉树使其平衡
@@ -62,11 +64,13 @@ private:
      */
     void L_rotate(BalancedBinaryTreeNode * & root);
 
+
     /**
      *  对以 *root 为根的平衡二叉树做右旋处理，处理之后指向新的树的根节点
      *  @param root: 旋转前后的根节点
      */
     void R_rotate(BalancedBinaryTreeNode * & root);
+
 
     /**
      *  对以 *root 为根的平衡二叉树做左旋平衡处理，处理之后指向新的树的根节点
@@ -74,11 +78,13 @@ private:
      */
     void leftBalance(BalancedBinaryTreeNode * & root);
 
+
     /**
      *  对以 *root 为根的平衡二叉树做右旋平衡处理，处理之后指向新的树的根节点
      *  @param root: 旋转平衡前后的根节点
      */
     void rightBalance(BalancedBinaryTreeNode * & root);
+
 
     /* 树的根节点 */
     BalancedBinaryTreeNode * root;

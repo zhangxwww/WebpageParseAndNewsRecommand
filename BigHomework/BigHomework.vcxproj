@@ -30,6 +30,7 @@
     <ClInclude Include="CharStringLinkNode.h" />
     <ClInclude Include="InfoType.h" />
     <ClInclude Include="InitDictionary.h" />
+    <ClInclude Include="InvertedFileLinkList.h" />
     <ClInclude Include="InvertedFileLinkNode.h" />
     <ClInclude Include="LabelType.h" />
     <ClInclude Include="NewsInfo.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="CharStringLink.cpp" />
     <ClCompile Include="CharStringLinkNode.cpp" />
     <ClCompile Include="InitDictionary.cpp" />
+    <ClCompile Include="InvertedFileLinkList.cpp" />
     <ClCompile Include="InvertedFileLinkNode.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewsInfo.cpp" />

@@ -5,6 +5,9 @@ BalancedBinaryTree::BalancedBinaryTree()
 }
 
 BalancedBinaryTree::~BalancedBinaryTree() {
+    if (root != nullptr) {
+        delete root;
+    }
 }
 
 bool BalancedBinaryTree::insert(
