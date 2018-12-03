@@ -3,7 +3,7 @@
 #include <io.h>
 #include <fstream>
 
-const CharStringLink divideWords(
+CharStringLink divideWords(
     const CharString & infoFilename,
     const CharStringHashTable & hashTable) {
 

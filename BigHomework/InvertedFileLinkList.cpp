@@ -18,7 +18,7 @@ InvertedFileLinkList::~InvertedFileLinkList() {
     }
 }
 
-void InvertedFileLinkList::add(const int docID) {
+void InvertedFileLinkList::add(const int docID, const int times) {
     bbtNode->totalIncrease();
     InvertedFileLinkNode * p = search(docID);
     // 当前链表中没有对应文档
@@ -33,7 +33,7 @@ void InvertedFileLinkList::add(const int docID) {
     }
     // 找到了对应文档
     else {  
-        p->timeIncrease();
+        p->timeIncrease(times);
         InvertedFileLinkNode * pre = p->getPrev();
         // 将出现次数更多的文档前提
         while (pre->getID() != -1

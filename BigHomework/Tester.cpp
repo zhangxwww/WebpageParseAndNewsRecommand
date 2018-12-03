@@ -25,6 +25,7 @@ void Tester::testStack() {
 void Tester::testCharString() {
     std::locale loc(".936");
     std::wcout.imbue(loc);
+    /*
     CharString cs1;
     CharString cs2;
     CharString cs3;
@@ -39,6 +40,8 @@ void Tester::testCharString() {
     std::wcout << cs1 << " " << cs2 << " " << (cs1 <= cs2) << std::endl;
     std::wcout << cs1 << " " << cs3 << " " << (cs1 <= cs3) << std::endl;
     std::wcout << cs1 << " " << cs4 << " " << (cs1 <= cs4) << std::endl;
+    */
+    std::wcout << CharString::parseFromInteger(123) << std::endl;
 }
 
 void Tester::testCharStringLink() {

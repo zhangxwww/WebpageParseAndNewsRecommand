@@ -28,7 +28,7 @@ int main() {
     // divideWordsInAllFiles(hashTable);
 
 
-    Tester::testBalancedBinaryTree();
+    Tester::testCharString();
 
     return 0;
 }

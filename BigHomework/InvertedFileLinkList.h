@@ -8,7 +8,8 @@ class BalancedBinaryTreeNode;
 /* 倒排文档链表 */
 class InvertedFileLinkList {
 public:
-    InvertedFileLinkList(BalancedBinaryTreeNode * node);
+    InvertedFileLinkList(
+        BalancedBinaryTreeNode * node);
     ~InvertedFileLinkList();
 
 
@@ -17,8 +18,9 @@ public:
     /**
      *  在文档链表中插入对应id的结点
      *  @param docID: 待插入的文档id
+     *  @param times: 文档中单词出现的次数
      */
-    void add(const int docID);
+    void add(const int docID, const int times=1);
 
 
     /**
@@ -26,7 +28,8 @@ public:
      *  @param docID: 待搜索的文档id
      *  @return     : 搜索成功返回指向对应结点的指针，否则返回尾结点
      */
-    InvertedFileLinkNode * search(const int docID) const;
+    InvertedFileLinkNode * search(
+        const int docID) const;
 
 
     /**

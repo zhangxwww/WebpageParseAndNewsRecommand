@@ -22,6 +22,7 @@
     <ClInclude Include="BalancedBinaryTree.h" />
     <ClInclude Include="BalancedBinaryTreeNode.h" />
     <ClInclude Include="BalancedFactor.h" />
+    <ClInclude Include="BuildInvertedFiles.h" />
     <ClInclude Include="DivideWords.h" />
     <ClInclude Include="ExtractInfo.h" />
     <ClInclude Include="CharString.h" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClCompile Include="BalancedBinaryTree.cpp" />
     <ClCompile Include="BalancedBinaryTreeNode.cpp" />
+    <ClCompile Include="BuildInvertedFiles.cpp" />
     <ClCompile Include="DivideWords.cpp" />
     <ClCompile Include="ExtractInfo.cpp" />
     <ClCompile Include="CharString.cpp" />

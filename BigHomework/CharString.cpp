@@ -86,6 +86,22 @@ const wchar_t * CharString::wchar() const {
     return items;
 }
 
+CharString CharString::parseFromInteger(const int x) {
+    CharString result;
+    result = L"";
+    int i = x;
+    while (i > 0) {
+        wchar_t w = i % 10 + '0';
+        CharString temp;
+        temp = L"";
+        temp.concat(w);
+        temp.concat(result);
+        result = temp;
+        i /= 10;
+    }
+    return result;
+}
+
 CharString CharString::trim() {
     CharString cs;
     if (len > 0) {

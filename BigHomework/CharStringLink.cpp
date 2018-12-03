@@ -154,6 +154,40 @@ void CharStringLink::append(const CharStringLink & csl) {
     }
 }
 
+CharStringLinkNode * CharStringLink::pop() {
+    if (len == 0) {
+        return nullptr;
+    }
+    else {
+        CharStringLinkNode * p = head->getNext();
+        head->setNext(p->getNext());
+        p->setNext(nullptr);
+        return p;
+    }
+}
+
+void CharStringLink::clearShorterThan(
+    const int threshold) {
+
+    curPos = head;
+    curIndex = -1;
+    while (curPos->getNext() != nullptr) {
+        if (curPos->getNext()->getCharString()
+            .length() < threshold) {
+
+            curPos->setNext(curPos->getNext()->getNext());
+            curPos->getNext()->setNext(nullptr);
+            CharStringLinkNode * p = curPos->getNext();
+            delete p;
+            len--;
+        }
+        else {
+            curPos = curPos->getNext();
+            curIndex++;
+        }     
+    }
+}
+
 std::wostream & operator<<(std::wostream & out, 
     const CharStringLink & csl) {
 
@@ -163,4 +197,20 @@ std::wostream & operator<<(std::wostream & out,
         out << pos->getCharString() << std::endl;
     }
     return out;
+}
+
+std::wistream & operator>>(std::wifstream & in, CharStringLink & csl) {
+    std::locale loc(".936");
+    in.imbue(loc);
+    std::wstring line;
+    CharString csline;
+    while (!in.eof()) {
+        std::getline(in, line);
+        if (line.empty()) {
+            continue;
+        }
+        csline = line;
+        csl.add(csline);
+    }
+    return in;
 }

@@ -82,6 +82,19 @@ public:
 
 
     /**
+     *  弹出链表的第一个结点
+     *  @return: 弹出的结点
+     */
+    CharStringLinkNode * pop();
+
+    /**
+     *  将删掉单词长度小于threshold的结点
+     *  @param threshold: 阈值
+     */
+    void clearShorterThan(const int threshold);
+
+
+    /**
      *  重载 << 号
      *  @param out: 宽输出流的引用
      *  @param csl: 用于输出的链表
@@ -89,6 +102,16 @@ public:
      */
     friend std::wostream & operator<< (std::wostream & out,
         const CharStringLink & csl);
+
+
+    /**
+     *  重载 >> 号
+     *  @param in : 宽输入流的引用
+     *  @param csl: 用于输入的链表
+     *  @return   : 宽输入流的引用
+     */
+    friend std::wistream & operator>> (std::wifstream & in,
+        CharStringLink & csl);
 
 private:
     /* 链表头结点 */

@@ -12,7 +12,7 @@
  *  @param hashTable   : 由词库得到的哈希表
  *  @return            : 字符串链表类型的分词结果
  */
-const CharStringLink divideWords(
+CharStringLink divideWords(
     const CharString & infoFilename,
     const CharStringHashTable & hashTable);
 

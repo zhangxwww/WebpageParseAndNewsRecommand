@@ -125,6 +125,13 @@ public:
 
 
     /**
+     *  将整数转化为CharString类型字符串
+     *  @param x: 待转化的整数
+     *  @return : 对应字符串
+     */
+    static CharString parseFromInteger(const int x);
+
+    /**
      *  去除字符串首尾两端的空白字符
      */
     CharString trim();

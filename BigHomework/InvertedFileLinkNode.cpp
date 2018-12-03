@@ -33,18 +33,22 @@ void InvertedFileLinkNode::setID(const int id) {
     this->docID = id;
 }
 
-void InvertedFileLinkNode::timeIncrease() {
-    times++;
+void InvertedFileLinkNode::timeIncrease(const int times) {
+    this->times += times;
 }
 
 void InvertedFileLinkNode::timeDecrease() {
     times--;
 }
 
-void InvertedFileLinkNode::setNext(InvertedFileLinkNode * next) {
+void InvertedFileLinkNode::setNext(
+    InvertedFileLinkNode * next) {
+
     this->next = next;
 }
 
-void InvertedFileLinkNode::setPrev(InvertedFileLinkNode * prev) {
+void InvertedFileLinkNode::setPrev(
+    InvertedFileLinkNode * prev) {
+
     this->prev = prev;
 }
