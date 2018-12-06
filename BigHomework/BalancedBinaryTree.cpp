@@ -12,11 +12,13 @@ BalancedBinaryTree::~BalancedBinaryTree() {
 
 bool BalancedBinaryTree::insert(
     BalancedBinaryTreeNode *& root, 
+    BalancedBinaryTreeNode * & p,
     const CharString & term, 
     bool & taller) {
 
     if (root == nullptr) {
         root = new BalancedBinaryTreeNode(term);
+        p = root;
         taller = true;
     }
     else {
@@ -25,7 +27,7 @@ bool BalancedBinaryTree::insert(
             return false;
         }
         if (term < root->getTerm()) {
-            if (!insert(root->getLeft(), term, taller)) {
+            if (!insert(root->getLeft(), p, term, taller)) {
                 return false;
             }
             if(taller){
@@ -33,7 +35,7 @@ bool BalancedBinaryTree::insert(
             }
         }
         else {
-            if (!insert(root->getRight(), term, taller)) {
+            if (!insert(root->getRight(), p, term, taller)) {
                 return false;
             }
             if (taller) {

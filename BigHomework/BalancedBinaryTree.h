@@ -14,12 +14,14 @@ public:
     /**
      *  平衡二叉树的插入
      *  @param root  : 当前树的根结点
+     *  @param p     : 保存插入得到的结点
      *  @param term  : 待插入的词
      *  @param taller: 记录树是否长高
      *  @return      : 插入成功返回 true，已存在则返回 false
      */
-    bool insert(BalancedBinaryTreeNode * & root,
-        const CharString & term,
+    bool insert(BalancedBinaryTreeNode * & root, 
+        BalancedBinaryTreeNode * & p,
+        const CharString & term, 
         bool & taller);
 
 

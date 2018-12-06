@@ -186,7 +186,8 @@ void Tester::testBalancedBinaryTree() {
         words[9] = L"7";
         for (int i = 0; i < 10; i++) {
             bool taller = false;
-            tree->insert(tree->getRoot(), words[i], taller);
+            BalancedBinaryTreeNode * p = nullptr;
+            tree->insert(tree->getRoot(), p, words[i], taller);
         }
         BalancedBinaryTreeNode * bbtn;
         for (int i = 0; i < 10; i++) {

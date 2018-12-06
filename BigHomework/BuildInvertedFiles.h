@@ -15,8 +15,11 @@ namespace BIF {
 
 BalancedBinaryTree * buildInvertedFiles();
 
+void save(BalancedBinaryTree * tree);
 
-// TODO frominvertedfiles
+BalancedBinaryTree * fromExistedInvertedfiles(bool & ok);
+
+BalancedBinaryTree * fromDataBase();
 
 bool fromTxtFile(const int order,
     CharStringLink * words);

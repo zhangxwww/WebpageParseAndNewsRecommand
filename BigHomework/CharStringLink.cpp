@@ -162,6 +162,7 @@ CharStringLinkNode * CharStringLink::pop() {
         CharStringLinkNode * p = head->getNext();
         head->setNext(p->getNext());
         p->setNext(nullptr);
+        len--;
         return p;
     }
 }

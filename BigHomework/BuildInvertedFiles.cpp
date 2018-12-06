@@ -4,8 +4,49 @@
 #include "ExtractInfo.h"
 #include "InitDictionary.h"
 #include "DivideWords.h"
+#include "Stack.h"
 
 BalancedBinaryTree * buildInvertedFiles() {
+    BalancedBinaryTree * tree;
+    bool ok = false;
+    tree = fromExistedInvertedfiles(ok);
+    if (ok) {
+        return tree;
+    }
+    else {
+        tree = fromDataBase();
+        save(tree);
+    }
+    return tree;
+}
+
+void save(BalancedBinaryTree * tree) {
+    CharString fileName;
+    fileName = L".\\output\\InvertedFileLink";
+    std::wofstream file(fileName.wstring(), std::ios::out);
+    std::locale loc(".936");
+    file.imbue(loc);
+    Stack<BalancedBinaryTreeNode *> waitingNode;
+    waitingNode.push(tree->getRoot());
+    while (!waitingNode.empty()) {
+        // TODO 参考书上P130的代码重新写一下
+        if (waitingNode.top()->getLeft() != nullptr) {
+            waitingNode.push(waitingNode.top()->getLeft());
+        }
+        else {
+            BalancedBinaryTreeNode * p = waitingNode.pop();
+            // TODO visit p
+            if (p->getRight() != nullptr) {
+                waitingNode.push(p->getRight());
+            }
+            else {
+
+            }
+        }
+    }
+}
+
+BalancedBinaryTree * fromDataBase() {
 
     BalancedBinaryTree * tree = new BalancedBinaryTree;
 
@@ -13,24 +54,38 @@ BalancedBinaryTree * buildInvertedFiles() {
     CharStringHashTable hashTable;
     bool hashTableInited = false;
    
-    for (int i = 0; i < BIF::COUNT_FILES; i++) {
+    for (int id = 0; id < BIF::COUNT_FILES; id++) {
         CharStringLink * words = new CharStringLink;
         // .\output目录下不存在对应的分词文件.txt
-        if (!fromTxtFile(i, words)) {
+        if (!fromTxtFile(id, words)) {
             if (!hashTableInited) {
                 hashTable = initDictionary();
                 hashTableInited = true;
             }
             // .\output目录下不存在对应的信息文件.info
-            if (!fromInfoFile(i, words, &hashTable)) {
+            if (!fromInfoFile(id, words, &hashTable)) {
                 // .\input目录下不存在对应的网页文件.html
-                if (!fromHtmlFile(i, words, &hashTable)) {
-                    std::wcout << L"不存在" << i << ".html" << L"文件" << std::endl;
+                if (!fromHtmlFile(id, words, &hashTable)) {
+                    std::wcout << L"不存在" << id << ".html" << std::endl;
                     continue;
                 }
             }
         }
         words->clearShorterThan(2);
+
+        while (words->length() > 0) {
+            CharString word = words->pop()->getCharString();
+            BalancedBinaryTreeNode * p = nullptr;
+            bool taller = false;
+            if (tree->search(tree->getRoot(), word, nullptr, p)
+                || tree->insert(tree->getRoot(), p, word, taller)) {
+                
+                p->getFileLinkList()->add(id);
+            }
+            else {
+                continue;
+            }
+        }
     }
     return tree;
 }

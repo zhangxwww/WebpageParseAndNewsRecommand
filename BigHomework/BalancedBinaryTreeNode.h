@@ -63,6 +63,13 @@ public:
 
 
     /**
+     *  获取以当前结点的保存的倒排文档链表
+     *  @return: 当前结点保存的倒排文档链表
+     */
+    InvertedFileLinkList * getFileLinkList() const;
+
+
+    /**
      *  相关文档总数增加
      */
     void docIncrease();
