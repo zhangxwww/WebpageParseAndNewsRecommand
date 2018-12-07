@@ -176,9 +176,9 @@ void CharStringLink::clearShorterThan(
         if (curPos->getNext()->getCharString()
             .length() < threshold) {
 
-            curPos->setNext(curPos->getNext()->getNext());
-            curPos->getNext()->setNext(nullptr);
             CharStringLinkNode * p = curPos->getNext();
+            curPos->setNext(p->getNext());
+            p->setNext(nullptr);
             delete p;
             len--;
         }
@@ -186,6 +186,26 @@ void CharStringLink::clearShorterThan(
             curPos = curPos->getNext();
             curIndex++;
         }     
+    }
+}
+
+void CharStringLink::clearNumbers() {
+    curPos = head;
+    curIndex = -1;
+    while (curPos->getNext() != nullptr) {
+        if (curPos->getNext()->getCharString()
+            .isNumbers()) {
+
+            CharStringLinkNode * p = curPos->getNext();
+            curPos->setNext(p->getNext());
+            p->setNext(nullptr);
+            delete p;
+            len--;
+        }
+        else {
+            curPos = curPos->getNext();
+            curIndex++;
+        }
     }
 }
 

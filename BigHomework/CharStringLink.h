@@ -96,6 +96,12 @@ public:
 
 
     /**
+     *  删掉所有内容为数字的结点
+     */
+    void clearNumbers();
+
+
+    /**
      *  重载 << 号
      *  @param out: 宽输出流的引用
      *  @param csl: 用于输出的链表

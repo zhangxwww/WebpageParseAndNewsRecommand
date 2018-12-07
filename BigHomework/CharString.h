@@ -145,6 +145,13 @@ public:
 
 
     /**
+     *  判断字符串是否为一串数字
+     *  @return: 如果字符串为一串数字，则返回true，否则false
+     */
+    bool isNumbers() const;
+
+
+    /**
      *  重载 << 号
      *  @param out: 宽输出流的引用
      *  @param cs : 用于输出的字符串

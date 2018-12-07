@@ -80,6 +80,20 @@ public:
      */
     void totalIncrease();
 
+
+    /**
+     *  获取以当前结点单词出现过的文章次数，也就是链表的长度
+     *  @return: 当前文章数量
+     */
+    const int getDocs() const;
+
+
+    /**
+     *  获取以当前结点单词总出现次数
+     *  @return: 当前结点单词总出现次数
+     */
+    const int getTotal() const;
+
 private:
     /* 当前结点保存的字符串 */
     CharString term;

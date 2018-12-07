@@ -6,6 +6,9 @@
 #include "DivideWords.h"
 #include "Stack.h"
 
+#include <sstream>
+#include <string>
+
 BalancedBinaryTree * buildInvertedFiles() {
     BalancedBinaryTree * tree;
     bool ok = false;
@@ -21,29 +24,95 @@ BalancedBinaryTree * buildInvertedFiles() {
 }
 
 void save(BalancedBinaryTree * tree) {
+    std::cout << "saving..." << std::endl;
     CharString fileName;
     fileName = L".\\output\\InvertedFileLink";
-    std::wofstream file(fileName.wstring(), std::ios::out);
+    std::wofstream file(fileName.wstring());
     std::locale loc(".936");
     file.imbue(loc);
     Stack<BalancedBinaryTreeNode *> waitingNode;
-    waitingNode.push(tree->getRoot());
-    while (!waitingNode.empty()) {
-        // TODO 参考书上P130的代码重新写一下
-        if (waitingNode.top()->getLeft() != nullptr) {
-            waitingNode.push(waitingNode.top()->getLeft());
+    BalancedBinaryTreeNode * p = tree->getRoot();
+
+    int count = 0;
+    while (p != nullptr
+        || !waitingNode.empty()) {
+        
+        if (p != nullptr) {
+            waitingNode.push(p);
+            p = p->getLeft();
         }
         else {
-            BalancedBinaryTreeNode * p = waitingNode.pop();
-            // TODO visit p
-            if (p->getRight() != nullptr) {
-                waitingNode.push(p->getRight());
-            }
-            else {
+            p = waitingNode.pop();
+            saveOneNode(p, file);
 
+            count++;
+            if (count % 1000 == 0) {
+                std::cout << count << std::endl;
             }
+
+            p = p->getRight();
         }
     }
+    file.close();
+}
+
+void saveOneNode(BalancedBinaryTreeNode * node,
+    std::wofstream & file) {
+
+    std::locale loc(".936");
+    file.imbue(loc);
+    file << node->getTerm() << L" ";
+    InvertedFileLinkNode * p = node->getFileLinkList()
+        ->getHead()->getNext();
+    file << node->getDocs() << L" ";
+    while (p != nullptr && p->getID() != -1) {
+        file << p->getID() << " " << p->getTimes() << " ";
+        p = p->getNext();
+    }
+    file << std::endl;
+}
+
+BalancedBinaryTree * fromExistedInvertedfiles(bool & ok) {
+    BalancedBinaryTree * tree = new BalancedBinaryTree;
+    CharString fileName;
+    fileName = L".\\output\\InvertedFileLink";
+    std::wifstream file(fileName.wstring());
+    if (!file) {
+        ok = false;
+        return nullptr;
+    }
+    ok = true;
+    std::locale loc(".936");
+    file.imbue(loc);
+    std::wstring line;
+    std::wstringstream sstream;
+    sstream.imbue(loc);
+    std::wstring word;
+    CharString csword;
+    BalancedBinaryTreeNode * p = nullptr;
+    bool taller;
+    while (!file.eof()) {
+        std::getline(file, line);
+        if (line.empty()) {
+            continue;
+        }
+        sstream << line;
+        sstream >> word;
+        csword = word;
+        tree->insert(tree->getRoot(), p, csword, taller);
+        int count;
+        sstream >> count;
+        for (int i = 0; i < count; i++) {
+            int docId;
+            int times;
+            sstream >> docId >> times;
+            p->getFileLinkList()->add(docId, times);
+        }
+        sstream.clear();
+        word.clear();
+    }
+    file.close();
+    return tree;
 }
 
 BalancedBinaryTree * fromDataBase() {
@@ -72,6 +141,7 @@ BalancedBinaryTree * fromDataBase() {
             }
         }
         words->clearShorterThan(2);
+        words->clearNumbers();
 
         while (words->length() > 0) {
             CharString word = words->pop()->getCharString();
@@ -99,12 +169,16 @@ bool fromTxtFile(const int order,
     txtFileName = L".\\output\\";
     txtFileName.concat(CharString::parseFromInteger(order));
     txtFileName.concat(postFix);
+
+    std::wcout << txtFileName << std::endl;
+
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(txtFileName.wstring(), std::ios::in);
     if (file) {
         file >> (*words);
+        file.close();
     }
     else {
         return false;
@@ -122,11 +196,15 @@ bool fromInfoFile(const int order,
     infoFileName = L".\\output\\";
     infoFileName.concat(CharString::parseFromInteger(order));
     infoFileName.concat(postFix);
+
+    std::wcout << infoFileName << std::endl;
+
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(infoFileName.wstring(), std::ios::in);
     if (file) {
+        file.close();
         (*words) = divideWords(infoFileName.subString(9), *hashTable);
     }
     else {
@@ -150,11 +228,14 @@ bool fromHtmlFile(const int order,
     htmlFileName.concat(CharString::parseFromInteger(order));
     htmlFileName.concat(postFixHtml);
 
+    std::wcout << htmlFileName << std::endl;
+
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(htmlFileName.wstring(), std::ios::in);
     if (file) {
+        file.close();
         const NewsInfo info = extractInfo(htmlFileName.subString(8));
         (*words) = divideOneLine(*hashTable, info.getContent());
     }

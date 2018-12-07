@@ -5,6 +5,7 @@
 #include <iostream>
 
 class BalancedBinaryTree;
+class BalancedBinaryTreeNode;
 class CharStringLink;
 class CharStringHashTable;
 
@@ -16,6 +17,9 @@ namespace BIF {
 BalancedBinaryTree * buildInvertedFiles();
 
 void save(BalancedBinaryTree * tree);
+
+void saveOneNode(BalancedBinaryTreeNode * node,
+    std::wofstream & file);
 
 BalancedBinaryTree * fromExistedInvertedfiles(bool & ok);
 

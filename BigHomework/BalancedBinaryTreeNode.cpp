@@ -57,3 +57,11 @@ void BalancedBinaryTreeNode::docIncrease() {
 void BalancedBinaryTreeNode::totalIncrease() {
     totalOccur++;
 }
+
+const int BalancedBinaryTreeNode::getDocs() const {
+    return countOfRelatedDocs;
+}
+
+const int BalancedBinaryTreeNode::getTotal() const {
+    return totalOccur;
+}

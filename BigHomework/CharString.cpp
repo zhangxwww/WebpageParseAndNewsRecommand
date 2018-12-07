@@ -89,6 +89,9 @@ const wchar_t * CharString::wchar() const {
 CharString CharString::parseFromInteger(const int x) {
     CharString result;
     result = L"";
+    if (x == 0) {
+        result = L"0";
+    }
     int i = x;
     while (i > 0) {
         wchar_t w = i % 10 + '0';
@@ -132,6 +135,15 @@ bool CharString::blank() const {
     for (int i = 0; i < len; i++) {
         if (items[i] != L' '
             && items[i] != L'\t') {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool CharString::isNumbers() const {
+    for (int i = 0; i < len; i++) {
+        if (items[i] < L'0' || items[i] > L'9') {
             return false;
         }
     }

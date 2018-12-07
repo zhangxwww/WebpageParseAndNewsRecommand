@@ -24,6 +24,7 @@ void InvertedFileLinkList::add(const int docID, const int times) {
     // 当前链表中没有对应文档
     if (p->getID() == -1) {  
         InvertedFileLinkNode * doc = new InvertedFileLinkNode(docID);
+        doc->timeIncrease();
         doc->setNext(p);
         doc->setPrev(p->getPrev());
         p->getPrev()->setNext(doc);
@@ -95,4 +96,8 @@ bool InvertedFileLinkList::remove(const int docID) {
         delete p;
         return true;
     }
+}
+
+InvertedFileLinkNode * InvertedFileLinkList::getHead() const {
+    return head;
 }

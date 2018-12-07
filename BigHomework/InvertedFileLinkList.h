@@ -48,6 +48,13 @@ public:
      */
     bool remove(const int docID);
 
+
+    /**
+     *  返回链表头结点
+     *  @return: 链表头结点
+     */
+    InvertedFileLinkNode * getHead() const;
+
 private:
     /* 链表的头尾结点 */
     InvertedFileLinkNode * head;

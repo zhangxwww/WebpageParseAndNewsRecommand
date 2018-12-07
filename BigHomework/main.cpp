@@ -1,7 +1,7 @@
 #include "ExtractInfo.h"
 #include "InitDictionary.h"
 #include "DivideWords.h"
-
+#include "BuildInvertedFiles.h"
 #include "Tester.h"
 
 #include <iostream>
@@ -28,7 +28,8 @@ int main() {
     // divideWordsInAllFiles(hashTable);
 
 
-    Tester::testCharString();
+    // Tester::testCharString();
+    BalancedBinaryTree * tree = buildInvertedFiles();
 
     return 0;
 }
