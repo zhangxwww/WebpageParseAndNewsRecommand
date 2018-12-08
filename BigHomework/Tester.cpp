@@ -25,23 +25,21 @@ void Tester::testStack() {
 void Tester::testCharString() {
     std::locale loc(".936");
     std::wcout.imbue(loc);
-    /*
+    
     CharString cs1;
     CharString cs2;
     CharString cs3;
     CharString cs4;
-    cs1 = L"哈";
-    cs2 = L"啊";
+    cs1 = L"律师事务所";
+    cs2 = L"盲目";
     cs3 = L"啊";
     cs4 = L"啊啊";
-    std::wcout << cs1 << " " << cs2 << " " << (cs1 < cs2) << std::endl;
-    std::wcout << cs1 << " " << cs3 << " " << (cs1 < cs3) << std::endl;
-    std::wcout << cs1 << " " << cs4 << " " << (cs1 < cs4) << std::endl;
-    std::wcout << cs1 << " " << cs2 << " " << (cs1 <= cs2) << std::endl;
-    std::wcout << cs1 << " " << cs3 << " " << (cs1 <= cs3) << std::endl;
-    std::wcout << cs1 << " " << cs4 << " " << (cs1 <= cs4) << std::endl;
-    */
-    std::wcout << CharString::parseFromInteger(123) << std::endl;
+    std::wcout << cs1 << "<" << cs2 << " " << (cs1 < cs2) << std::endl;
+    std::wcout << cs2 << "<" << cs1 << " " << (cs2 < cs1) << std::endl;
+    std::wcout << cs1 << "==" << cs2 << " " << (cs1 == cs2) << std::endl;
+
+    
+    // std::wcout << CharString::parseFromInteger(123) << std::endl;
 }
 
 void Tester::testCharStringLink() {
@@ -108,7 +106,7 @@ void Tester::testCharStringLink() {
     }
     std::wcout << csl1 << std::endl;
     */
-    
+
 }
 
 void Tester::testNewsInfo() {
@@ -162,7 +160,7 @@ void Tester::testInitDictionary() {
         std::cout << hashTable.find(test[i]) << std::endl;
     }
 
-    
+
 }
 
 void Tester::testDivideWords() {
@@ -171,34 +169,33 @@ void Tester::testDivideWords() {
 }
 
 void Tester::testBalancedBinaryTree() {
-    for (int i = 0;; i++) {
-        BalancedBinaryTree * tree = new BalancedBinaryTree;
-        CharString words[10];
-        words[0] = L"9";
-        words[1] = L"8";
-        words[2] = L"6";
-        words[3] = L"3";
-        words[4] = L"1";
-        words[5] = L"5";
-        words[6] = L"4";
-        words[7] = L"0";
-        words[8] = L"2";
-        words[9] = L"7";
-        for (int i = 0; i < 10; i++) {
+
+    BalancedBinaryTree * tree = new BalancedBinaryTree;
+    CharString words[10];
+    words[0] = L"理解";
+    words[1] = L"理性";
+    words[2] = L"例如";
+    words[3] = L"联系";
+    words[4] = L"亮色";
+    words[5] = L"另一方面";
+    words[6] = L"另一种";
+    words[7] = L"律师事务所";
+    words[8] = L"盲目";
+    words[9] = L"媒体";
+    for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < 5; i++) {
             bool taller = false;
             BalancedBinaryTreeNode * p = nullptr;
             tree->insert(tree->getRoot(), p, words[i], taller);
         }
-        BalancedBinaryTreeNode * bbtn;
-        for (int i = 0; i < 10; i++) {
-            tree->search(tree->getRoot(), words[i], nullptr, bbtn);
-        }
-        CharString newword;
-        newword = L"34";
-        tree->search(tree->getRoot(), newword, nullptr, bbtn);
-        delete tree;
-        if (i % 10000 == 0) {
-            std::cout << i << std::endl;
-        }
     }
+
+    BalancedBinaryTreeNode * bbtn = nullptr;
+    for (int i = 0; i < 10; i++) {
+        tree->search(tree->getRoot(), words[i], nullptr, bbtn);
+    }
+    CharString newword;
+    newword = L"34";
+    tree->search(tree->getRoot(), newword, nullptr, bbtn);
+    delete tree;
 }

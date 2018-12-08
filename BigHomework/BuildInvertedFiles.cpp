@@ -10,9 +10,9 @@
 #include <string>
 
 BalancedBinaryTree * buildInvertedFiles() {
-    BalancedBinaryTree * tree;
+    BalancedBinaryTree * tree = nullptr;
     bool ok = false;
-    tree = fromExistedInvertedfiles(ok);
+    // tree = fromExistedInvertedfiles(ok);
     if (ok) {
         return tree;
     }
@@ -147,6 +147,7 @@ BalancedBinaryTree * fromDataBase() {
             CharString word = words->pop()->getCharString();
             BalancedBinaryTreeNode * p = nullptr;
             bool taller = false;
+            
             if (tree->search(tree->getRoot(), word, nullptr, p)
                 || tree->insert(tree->getRoot(), p, word, taller)) {
                 
@@ -155,7 +156,23 @@ BalancedBinaryTree * fromDataBase() {
             else {
                 continue;
             }
+            
+            /*
+            if (tree->search(tree->getRoot(), word, nullptr, p)) {
+                std::wcout << L"find," << word << std::endl;
+            }
+            else {
+                if (tree->insert(tree->getRoot(), p, word, taller)) {
+                    std::wcout << L"insert," << word << std::endl;
+                }
+                else {
+                    std::wcout << L"can't insert," << word << std::endl;
+                    continue;
+                }
+            }
+            */
         }
+        delete words;
     }
     return tree;
 }

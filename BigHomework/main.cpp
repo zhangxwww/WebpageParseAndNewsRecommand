@@ -30,6 +30,7 @@ int main() {
 
     // Tester::testCharString();
     BalancedBinaryTree * tree = buildInvertedFiles();
+    // Tester::testBalancedBinaryTree();
 
     return 0;
 }

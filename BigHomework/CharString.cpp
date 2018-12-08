@@ -307,6 +307,9 @@ bool operator<(const CharString & cs1, const CharString & cs2) {
         if (cs1[i] < cs2[i]) {
             return true;
         }
+        if (cs1[i] > cs2[i]) {
+            return false;
+        }
     }
     if (i == len1 && i < len2) {
         return true;
