@@ -12,7 +12,7 @@
 BalancedBinaryTree * buildInvertedFiles() {
     BalancedBinaryTree * tree = nullptr;
     bool ok = false;
-    // tree = fromExistedInvertedfiles(ok);
+    tree = fromExistedInvertedfiles(ok);
     if (ok) {
         return tree;
     }
@@ -239,6 +239,7 @@ bool fromHtmlFile(const int order,
     if (file) {
         file.close();
         const NewsInfo info = extractInfo(htmlFileName.subString(8));
+        saveNewsInfo(info, htmlFileName.subString(8));
         (*words) = divideOneLine(*hashTable, info.getContent());
     }
     else {
