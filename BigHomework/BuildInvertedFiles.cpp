@@ -12,10 +12,12 @@
 BalancedBinaryTree * buildInvertedFiles() {
     BalancedBinaryTree * tree = nullptr;
     bool ok = false;
+    // 如果存在已经完成的词典与倒排文档的文件
     tree = fromExistedInvertedfiles(ok);
     if (ok) {
         return tree;
     }
+    // 否则从数据库中读取数据进行建立
     else {
         tree = fromDataBase();
         save(tree);
@@ -33,7 +35,7 @@ void save(BalancedBinaryTree * tree) {
     Stack<BalancedBinaryTreeNode *> waitingNode;
     BalancedBinaryTreeNode * p = tree->getRoot();
 
-    int count = 0;
+    // 中序遍历二叉树
     while (p != nullptr
         || !waitingNode.empty()) {
         
@@ -44,12 +46,6 @@ void save(BalancedBinaryTree * tree) {
         else {
             p = waitingNode.pop();
             saveOneNode(p, file);
-
-            count++;
-            if (count % 1000 == 0) {
-                std::cout << count << std::endl;
-            }
-
             p = p->getRight();
         }
     }
@@ -77,6 +73,7 @@ BalancedBinaryTree * fromExistedInvertedfiles(bool & ok) {
     CharString fileName;
     fileName = L".\\output\\InvertedFileLink";
     std::wifstream file(fileName.wstring());
+    // 不存在该文件
     if (!file) {
         ok = false;
         return nullptr;
@@ -140,6 +137,7 @@ BalancedBinaryTree * fromDataBase() {
                 }
             }
         }
+        // 去掉长度小于2的，或是完全由数字组成的单词
         words->clearShorterThan(2);
         words->clearNumbers();
 
@@ -172,13 +170,12 @@ bool fromTxtFile(const int order,
     txtFileName.concat(CharString::parseFromInteger(order));
     txtFileName.concat(postFix);
 
-    std::wcout << txtFileName << std::endl;
-
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(txtFileName.wstring(), std::ios::in);
     if (file) {
+        std::wcout << txtFileName << std::endl;
         file >> (*words);
         file.close();
     }
@@ -199,13 +196,12 @@ bool fromInfoFile(const int order,
     infoFileName.concat(CharString::parseFromInteger(order));
     infoFileName.concat(postFix);
 
-    std::wcout << infoFileName << std::endl;
-
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(infoFileName.wstring(), std::ios::in);
     if (file) {
+        std::wcout << infoFileName << std::endl;
         file.close();
         (*words) = divideWords(infoFileName.subString(9), *hashTable);
     }
@@ -230,13 +226,12 @@ bool fromHtmlFile(const int order,
     htmlFileName.concat(CharString::parseFromInteger(order));
     htmlFileName.concat(postFixHtml);
 
-    std::wcout << htmlFileName << std::endl;
-
     std::wifstream file;
     std::locale loc(".936");
     file.imbue(loc);
     file.open(htmlFileName.wstring(), std::ios::in);
     if (file) {
+        std::wcout << htmlFileName << std::endl;
         file.close();
         const NewsInfo info = extractInfo(htmlFileName.subString(8));
         saveNewsInfo(info, htmlFileName.subString(8));

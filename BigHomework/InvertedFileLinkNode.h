@@ -44,8 +44,8 @@ public:
 
 
     /**
-     *  单词出现次数加1
-     *  @param times: 出现的次数
+     *  单词出现次数增加
+     *  @param times: 出现的次数，默认为1
      */
     void timeIncrease(const int times=1);
 

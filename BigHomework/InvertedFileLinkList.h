@@ -49,6 +49,9 @@ public:
     bool remove(const int docID);
 
 
+    /********** 以下几个函数为为了方便而添加的函数 **********/
+
+
     /**
      *  返回链表头结点
      *  @return: 链表头结点
