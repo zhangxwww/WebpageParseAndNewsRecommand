@@ -13,6 +13,8 @@
 # DIC files
 *.dic
 
+InvertedFileLink
+
 # User-specific files
 *.suo
 *.user
