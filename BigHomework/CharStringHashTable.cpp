@@ -38,6 +38,13 @@ const CharStringLink & CharStringHashTable::at(const int index) const {
     return cslinks[index];
 }
 
+void CharStringHashTable::operator=(const CharStringHashTable & csht) {
+    cslinks = new CharStringLink[HASH_SIZE];
+    for (int i = 0; i < HASH_SIZE; i++) {
+        cslinks[i] = csht.at(i);
+    }
+}
+
 int CharStringHashTable::hash(const CharString & cs) const {
     int len = cs.length();
     int hash = 0;

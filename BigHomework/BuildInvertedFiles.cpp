@@ -156,21 +156,6 @@ BalancedBinaryTree * fromDataBase() {
             else {
                 continue;
             }
-            
-            /*
-            if (tree->search(tree->getRoot(), word, nullptr, p)) {
-                std::wcout << L"find," << word << std::endl;
-            }
-            else {
-                if (tree->insert(tree->getRoot(), p, word, taller)) {
-                    std::wcout << L"insert," << word << std::endl;
-                }
-                else {
-                    std::wcout << L"can't insert," << word << std::endl;
-                    continue;
-                }
-            }
-            */
         }
         delete words;
     }

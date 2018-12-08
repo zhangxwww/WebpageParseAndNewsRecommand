@@ -36,6 +36,13 @@ public:
      */
     const CharStringLink & at(const int index) const;
 
+
+    /**
+     *  重载 = 号，用CharStringHashTable类型的哈希表来进行赋值操作
+     *  @param cstr: 用于赋值的字符串
+     */
+    void operator= (const CharStringHashTable & csht);
+
 private:
     /**
      *  哈希算法，采用time33
