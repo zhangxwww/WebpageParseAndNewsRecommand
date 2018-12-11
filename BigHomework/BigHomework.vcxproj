@@ -35,6 +35,7 @@
     <ClInclude Include="InvertedFileLinkNode.h" />
     <ClInclude Include="LabelType.h" />
     <ClInclude Include="NewsInfo.h" />
+    <ClInclude Include="Query.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="Tester.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="InvertedFileLinkNode.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewsInfo.cpp" />
+    <ClCompile Include="Query.cpp" />
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

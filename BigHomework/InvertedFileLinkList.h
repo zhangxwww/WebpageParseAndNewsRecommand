@@ -1,8 +1,7 @@
 #ifndef INVERTED_FILE_LINK_LIST
 #define INVERTED_FILE_LINK_LIST
 
-#include "InvertedFileLinkNode.h"
-
+class InvertedFileLinkNode;
 class BalancedBinaryTreeNode;
 
 /* µπ≈≈Œƒµµ¡¥±Ì */

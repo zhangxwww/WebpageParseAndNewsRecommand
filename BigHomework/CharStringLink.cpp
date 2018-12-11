@@ -1,4 +1,5 @@
 #include "CharStringLink.h"
+#include "CharStringLinkNode.h"
 
 CharStringLink::CharStringLink() {
     head = new CharStringLinkNode;

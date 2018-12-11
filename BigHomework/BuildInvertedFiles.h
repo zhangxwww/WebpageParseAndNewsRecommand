@@ -17,9 +17,11 @@ namespace BIF {
 
 /**
  *  建立词典及其倒排文档
- *  @return: 词典对应的平衡二叉树的根结点
+ *  @param hashTable: 用于分词的哈希表
+ *  @return         : 词典对应的平衡二叉树的根结点
  */
-BalancedBinaryTree * buildInvertedFiles();
+BalancedBinaryTree * buildInvertedFiles(
+    const CharStringHashTable * hashTable);
 
 
 /**
@@ -34,7 +36,7 @@ void save(BalancedBinaryTree * tree);
  *  @param node: 所要保存的结点
  *  @param file: 待写入的文件
  */
-void saveOneNode(BalancedBinaryTreeNode * node,
+void saveOneNode(const BalancedBinaryTreeNode * node,
     std::wofstream & file);
 
 
@@ -48,9 +50,11 @@ BalancedBinaryTree * fromExistedInvertedfiles(bool & ok);
 
 /**
  *  从数据库中读入数据，建立词典与倒排文档
- *  @return: 二叉树的根结点
+ *  @param hashTable: 用于分词的哈希表
+ *  @return         : 二叉树的根结点
  */
-BalancedBinaryTree * fromDataBase();
+BalancedBinaryTree * fromDataBase(
+    const CharStringHashTable * hashTable);
 
 
 /**
@@ -72,7 +76,7 @@ bool fromTxtFile(const int order,
  */
 bool fromInfoFile(const int order,
     CharStringLink * words,
-    CharStringHashTable * hashTable);
+    const CharStringHashTable * hashTable);
 
 
 /**
@@ -84,6 +88,6 @@ bool fromInfoFile(const int order,
  */
 bool fromHtmlFile(const int order,
     CharStringLink * words,
-    CharStringHashTable * hashTable);
+    const CharStringHashTable * hashTable);
 
 #endif // !BUILD_INVERTED_FILES

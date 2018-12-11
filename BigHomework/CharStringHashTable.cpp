@@ -1,4 +1,5 @@
 #include "CharStringHashTable.h"
+#include "CharStringLinkNode.h"
 
 CharStringHashTable::CharStringHashTable() {
     cslinks = new CharStringLink[HASH_SIZE];

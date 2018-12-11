@@ -1,3 +1,4 @@
+#include "InvertedFileLinkNode.h"
 #include "InvertedFileLinkList.h"
 #include "BalancedBinaryTreeNode.h"
 
@@ -19,7 +20,9 @@ InvertedFileLinkList::~InvertedFileLinkList() {
 }
 
 void InvertedFileLinkList::add(const int docID, const int times) {
-    bbtNode->totalIncrease();
+    if (bbtNode != nullptr) {
+        bbtNode->totalIncrease();
+    }
     InvertedFileLinkNode * p = search(docID);
     // 当前链表中没有对应文档
     if (p->getID() == -1) {  
@@ -30,7 +33,9 @@ void InvertedFileLinkList::add(const int docID, const int times) {
         p->getPrev()->setNext(doc);
         p->setPrev(doc);
 
-        bbtNode->docIncrease();
+        if (bbtNode != nullptr) {
+            bbtNode->docIncrease();
+        }
     }
     // 找到了对应文档
     else {  

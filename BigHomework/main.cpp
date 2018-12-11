@@ -17,7 +17,8 @@ int main() {
      */
     // extractInfoInAllPages();
 
-    // CharStringHashTable hashTable = initDictionary();
+    /* 这里的hashtable是用于分词的 */
+    CharStringHashTable hashTable = initDictionary();
 
     /** 
      *  为了本次作业的展示方便起见，我在这里通过
@@ -29,8 +30,8 @@ int main() {
 
 
     // Tester::testCharString();
-    BalancedBinaryTree * tree = buildInvertedFiles();
+    BalancedBinaryTree * tree = buildInvertedFiles(&hashTable);
     // Tester::testBalancedBinaryTree();
-
+    
     return 0;
 }

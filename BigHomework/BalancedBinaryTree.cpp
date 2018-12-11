@@ -17,10 +17,7 @@ bool BalancedBinaryTree::insert(
     const CharString & term, 
     bool & taller) {
 
-    // std::locale loc(".936");
-    // std::wcout.imbue(loc);
     if (root == nullptr) {
-        // std::wcout << L"Insert " << term << std::endl;
         root = new BalancedBinaryTreeNode(term);
         p = root;
         taller = true;
@@ -56,16 +53,12 @@ bool BalancedBinaryTree::search(
     BalancedBinaryTreeNode * parent, 
     BalancedBinaryTreeNode * & p) {
 
-    // std::locale loc(".936");
-    // std::wcout.imbue(loc);
     if (root == nullptr) {
         p = parent;
-        // std::wcout << L"Can't find " << key << std::endl;
         return false;
     }
     else if (key == root->getTerm()) {
         p = root;
-        // std::wcout << L"Search " << key << std::endl;
         return true;
     }
     else if (key < root->getTerm()) {

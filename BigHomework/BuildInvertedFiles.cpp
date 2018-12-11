@@ -1,6 +1,8 @@
 #include "BuildInvertedFiles.h"
 #include "BalancedBinaryTree.h"
 #include "InvertedFileLinkList.h"
+#include "InvertedFileLinkNode.h"
+#include "CharStringLinkNode.h"
 #include "ExtractInfo.h"
 #include "InitDictionary.h"
 #include "DivideWords.h"
@@ -9,7 +11,9 @@
 #include <sstream>
 #include <string>
 
-BalancedBinaryTree * buildInvertedFiles() {
+BalancedBinaryTree * buildInvertedFiles(
+    const CharStringHashTable * hashTable) {
+
     BalancedBinaryTree * tree = nullptr;
     bool ok = false;
     // 如果存在已经完成的词典与倒排文档的文件
@@ -19,7 +23,7 @@ BalancedBinaryTree * buildInvertedFiles() {
     }
     // 否则从数据库中读取数据进行建立
     else {
-        tree = fromDataBase();
+        tree = fromDataBase(hashTable);
         save(tree);
     }
     return tree;
@@ -52,7 +56,7 @@ void save(BalancedBinaryTree * tree) {
     file.close();
 }
 
-void saveOneNode(BalancedBinaryTreeNode * node,
+void saveOneNode(const BalancedBinaryTreeNode * node,
     std::wofstream & file) {
 
     std::locale loc(".936");
@@ -112,26 +116,19 @@ BalancedBinaryTree * fromExistedInvertedfiles(bool & ok) {
     return tree;
 }
 
-BalancedBinaryTree * fromDataBase() {
+BalancedBinaryTree * fromDataBase(
+    const CharStringHashTable * hashTable) { 
 
     BalancedBinaryTree * tree = new BalancedBinaryTree;
 
-    // 这里的hash table是用于分词的
-    CharStringHashTable hashTable;
-    bool hashTableInited = false;
-   
     for (int id = 0; id < BIF::COUNT_FILES; id++) {
         CharStringLink * words = new CharStringLink;
         // .\output目录下不存在对应的分词文件.txt
         if (!fromTxtFile(id, words)) {
-            if (!hashTableInited) {
-                hashTable = initDictionary();
-                hashTableInited = true;
-            }
             // .\output目录下不存在对应的信息文件.info
-            if (!fromInfoFile(id, words, &hashTable)) {
+            if (!fromInfoFile(id, words, hashTable)) {
                 // .\input目录下不存在对应的网页文件.html
-                if (!fromHtmlFile(id, words, &hashTable)) {
+                if (!fromHtmlFile(id, words, hashTable)) {
                     std::wcout << L"不存在" << id << ".html" << std::endl;
                     continue;
                 }
@@ -187,7 +184,7 @@ bool fromTxtFile(const int order,
 
 bool fromInfoFile(const int order, 
     CharStringLink * words, 
-    CharStringHashTable * hashTable) {
+    const CharStringHashTable * hashTable) {
 
     CharString infoFileName;
     CharString postFix;
@@ -213,7 +210,7 @@ bool fromInfoFile(const int order,
 
 bool fromHtmlFile(const int order, 
     CharStringLink * words, 
-    CharStringHashTable * hashTable) {
+    const CharStringHashTable * hashTable) {
 
     CharString htmlFileName;
     CharString postFixInfo;

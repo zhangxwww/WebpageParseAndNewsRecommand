@@ -1,8 +1,11 @@
 #ifndef CHAR_STRING_LINK_H
 #define CHAR_STRING_LINK_H
 
-#include "CharStringLinkNode.h"
+#include "CharString.h"
+
 #include <iostream>
+
+class CharStringLinkNode;
 
 class CharStringLink {
 public:
