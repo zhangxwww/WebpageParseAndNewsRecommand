@@ -12,7 +12,7 @@
 #include <string>
 
 BalancedBinaryTree * buildInvertedFiles(
-    const CharStringHashTable * hashTable) {
+    const CharStringHashTable * dictionary) {
 
     BalancedBinaryTree * tree = nullptr;
     bool ok = false;
@@ -23,7 +23,7 @@ BalancedBinaryTree * buildInvertedFiles(
     }
     // 否则从数据库中读取数据进行建立
     else {
-        tree = fromDataBase(hashTable);
+        tree = fromDataBase(dictionary);
         save(tree);
     }
     return tree;
@@ -117,7 +117,7 @@ BalancedBinaryTree * fromExistedInvertedfiles(bool & ok) {
 }
 
 BalancedBinaryTree * fromDataBase(
-    const CharStringHashTable * hashTable) { 
+    const CharStringHashTable * dictionary) {
 
     BalancedBinaryTree * tree = new BalancedBinaryTree;
 
@@ -126,9 +126,9 @@ BalancedBinaryTree * fromDataBase(
         // .\output目录下不存在对应的分词文件.txt
         if (!fromTxtFile(id, words)) {
             // .\output目录下不存在对应的信息文件.info
-            if (!fromInfoFile(id, words, hashTable)) {
+            if (!fromInfoFile(id, words, dictionary)) {
                 // .\input目录下不存在对应的网页文件.html
-                if (!fromHtmlFile(id, words, hashTable)) {
+                if (!fromHtmlFile(id, words, dictionary)) {
                     std::wcout << L"不存在" << id << ".html" << std::endl;
                     continue;
                 }
@@ -184,7 +184,7 @@ bool fromTxtFile(const int order,
 
 bool fromInfoFile(const int order, 
     CharStringLink * words, 
-    const CharStringHashTable * hashTable) {
+    const CharStringHashTable * dictionary) {
 
     CharString infoFileName;
     CharString postFix;
@@ -200,7 +200,7 @@ bool fromInfoFile(const int order,
     if (file) {
         std::wcout << infoFileName << std::endl;
         file.close();
-        (*words) = divideWords(infoFileName.subString(9), *hashTable);
+        (*words) = divideWords(infoFileName.subString(9), *dictionary);
     }
     else {
         return false;
@@ -210,7 +210,7 @@ bool fromInfoFile(const int order,
 
 bool fromHtmlFile(const int order, 
     CharStringLink * words, 
-    const CharStringHashTable * hashTable) {
+    const CharStringHashTable * dictionary) {
 
     CharString htmlFileName;
     CharString postFixInfo;
@@ -232,7 +232,7 @@ bool fromHtmlFile(const int order,
         file.close();
         const NewsInfo info = extractInfo(htmlFileName.subString(8));
         saveNewsInfo(info, htmlFileName.subString(8));
-        (*words) = divideOneLine(*hashTable, info.getContent());
+        (*words) = divideOneLine(*dictionary, info.getContent());
     }
     else {
         return false;

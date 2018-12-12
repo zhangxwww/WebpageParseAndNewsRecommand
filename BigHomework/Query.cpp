@@ -10,7 +10,7 @@
 #include <string>
 
 void queryAll(BalancedBinaryTree * tree,
-    const CharStringHashTable * hashTable) {
+    const CharStringHashTable * dictionary) {
 
     CharString queryFileName;
     CharString resultFileName;
@@ -25,16 +25,23 @@ void queryAll(BalancedBinaryTree * tree,
     std::wstring line;
     CharString csline;
 
+    // 每次读入的一行，就是一次查询
     while (!queryFile.eof()) {
         std::getline(queryFile, line);
         CharStringLink queryWords;
         csline = line;
-        queryWords.append(divideOneLine(*hashTable, csline));
+        // 分词
+        queryWords.append(divideOneLine(*dictionary, csline));
+        // 用文档链表的形式保存查询的结果
+        // 这实际上是对几个单词对应的倒排文档进行了合并
         InvertedFileLinkList * fileList = query(tree, &queryWords);
+        // 保存结果
         saveResults(resultFile, fileList);
         delete fileList;
         line.clear();
     }
+    queryFile.close();
+    resultFile.close();
 }
 
 InvertedFileLinkList * query(
@@ -53,6 +60,7 @@ InvertedFileLinkList * query(
                 p->getFileLinkList()->getHead()->getNext();
             while (docNode != nullptr && docNode->getID() != -1) {
                 result->add(docNode->getID(), docNode->getTimes());
+                docNode = docNode->getNext();
             }
         }
     }
@@ -66,6 +74,7 @@ void saveResults(std::wofstream & file,
     while (p != nullptr && p->getID() != -1) {            
         file << generateResultWithCorrectFormat(
             p->getID(), p->getTimes());
+        p = p->getNext();
     }
     file << std::endl;
 }

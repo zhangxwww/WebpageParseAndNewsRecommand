@@ -61,6 +61,10 @@ Stack<CharString> getInfoFileList() {
     Stack<CharString> infoFileList;
     CharString path;
     path = L".\\output\\*.info";
+    CharString txtPath;
+    CharString txtPostfix;
+    txtPath = L".\\output\\";
+    txtPostfix = L".txt";
 
     intptr_t hFile = 0;
     struct _wfinddata_t fileData;
@@ -69,6 +73,16 @@ Stack<CharString> getInfoFileList() {
         do {
             CharString infoFilename;
             infoFilename = fileData.name;
+            // 如果找不到对应的txt文件，才会将其压栈
+            CharString txtName;
+            txtName = txtPath;
+            txtName.concat(infoFilename.subString(0, infoFilename.indexOf(L'.')));
+            txtName.concat(txtPostfix);
+            std::wifstream txtFile(txtName.wstring());
+            if (txtFile) {
+                txtFile.close();
+                continue;
+            }
             infoFileList.push(infoFilename);
         } while (_wfindnext(hFile, &fileData) == 0);
         _findclose(hFile);

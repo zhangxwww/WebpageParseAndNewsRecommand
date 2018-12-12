@@ -17,11 +17,11 @@ namespace BIF {
 
 /**
  *  建立词典及其倒排文档
- *  @param hashTable: 用于分词的哈希表
- *  @return         : 词典对应的平衡二叉树的根结点
+ *  @param dictionary: 用于分词的哈希表
+ *  @return          : 词典对应的平衡二叉树的根结点
  */
 BalancedBinaryTree * buildInvertedFiles(
-    const CharStringHashTable * hashTable);
+    const CharStringHashTable * dictionary);
 
 
 /**
@@ -50,11 +50,11 @@ BalancedBinaryTree * fromExistedInvertedfiles(bool & ok);
 
 /**
  *  从数据库中读入数据，建立词典与倒排文档
- *  @param hashTable: 用于分词的哈希表
- *  @return         : 二叉树的根结点
+ *  @param dictionary: 用于分词的哈希表
+ *  @return          : 二叉树的根结点
  */
 BalancedBinaryTree * fromDataBase(
-    const CharStringHashTable * hashTable);
+    const CharStringHashTable * dictionary);
 
 
 /**
@@ -69,25 +69,25 @@ bool fromTxtFile(const int order,
 
 /**
  *  从info文件中读入数据，返回文章中所有的单词构成的字符串链表
- *  @param order    : 网页序号
- *  @param words    : 从info文件中经分词得到的字符串链表
- *  @param hashTable: 由词库得到的哈希表，用于分词
- *  @return         : 存在对应的info文件则返回true, 否则false
+ *  @param order     : 网页序号
+ *  @param words     : 从info文件中经分词得到的字符串链表
+ *  @param dictionary: 由词库得到的哈希表，用于分词
+ *  @return          : 存在对应的info文件则返回true, 否则false
  */
 bool fromInfoFile(const int order,
     CharStringLink * words,
-    const CharStringHashTable * hashTable);
+    const CharStringHashTable * dictionary);
 
 
 /**
  *  从html文件中读入数据，返回文章内容中所有的单词构成的字符串链表
- *  @param order    : 网页序号
- *  @param words    : 从html文件中经信息提取、分词得到的字符串链表
- *  @param hashTable: 由词库得到的哈希表，用于分词
- *  @return         : 存在对应的html文件则返回true, 否则false
+ *  @param order     : 网页序号
+ *  @param words     : 从html文件中经信息提取、分词得到的字符串链表
+ *  @param dictionary: 由词库得到的哈希表，用于分词
+ *  @return          : 存在对应的html文件则返回true, 否则false
  */
 bool fromHtmlFile(const int order,
     CharStringLink * words,
-    const CharStringHashTable * hashTable);
+    const CharStringHashTable * dictionary);
 
 #endif // !BUILD_INVERTED_FILES

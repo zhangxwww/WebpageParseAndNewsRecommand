@@ -45,6 +45,10 @@ Stack<CharString> getHTMLList() {
     Stack<CharString> HTMLlist;
     CharString path;
     path = L".\\input\\*.html";
+    CharString infoPath;
+    CharString infoPostfix;
+    infoPath = L".\\output\\";
+    infoPostfix = L".info";
 
     intptr_t hFile = 0;
     struct _wfinddata_t fileData;
@@ -53,6 +57,16 @@ Stack<CharString> getHTMLList() {
         do {
             CharString HTMLname;
             HTMLname = fileData.name;
+            // 如果找不到对应的info文件，才会将其压栈
+            CharString infoName;
+            infoName = infoPath; 
+            infoName.concat(HTMLname.subString(0, HTMLname.indexOf(L'.')));
+            infoName.concat(infoPostfix);
+            std::wifstream infoFile(infoName.wstring());
+            if (infoFile) {
+                infoFile.close();
+                continue;
+            }
             HTMLlist.push(HTMLname);
         } while (_wfindnext(hFile, &fileData) == 0);
         _findclose(hFile);

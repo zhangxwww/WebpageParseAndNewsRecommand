@@ -2,6 +2,7 @@
 #include "InitDictionary.h"
 #include "DivideWords.h"
 #include "BuildInvertedFiles.h"
+#include "Query.h"
 #include "Tester.h"
 
 #include <iostream>
@@ -15,10 +16,10 @@ int main() {
      *  extractInfo函数，具体情况可以参见
      *  ExtractInfo.h中的代码
      */
-    // extractInfoInAllPages();
+    extractInfoInAllPages();
 
     /* 这里的hashtable是用于分词的 */
-    CharStringHashTable hashTable = initDictionary();
+    CharStringHashTable dictionary = initDictionary();
 
     /** 
      *  为了本次作业的展示方便起见，我在这里通过
@@ -26,12 +27,14 @@ int main() {
      *  divideWords函数，具体情况可以参见
      *  DivideWords.h中的代码
      */
-    // divideWordsInAllFiles(hashTable);
+    divideWordsInAllFiles(dictionary);
 
 
-    // Tester::testCharString();
-    BalancedBinaryTree * tree = buildInvertedFiles(&hashTable);
-    // Tester::testBalancedBinaryTree();
-    
+
+    BalancedBinaryTree * tree = buildInvertedFiles(&dictionary);
+
+
+    queryAll(tree, &dictionary);
+
     return 0;
 }
