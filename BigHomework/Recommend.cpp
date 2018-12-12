@@ -9,8 +9,8 @@
 #include "InvertedFileLinkNode.h"
 
 void recommendAll(CharString * map,
- 
-    BalancedBinaryTree * tree, CharStringHashTable * dictionary) {
+    BalancedBinaryTree * tree, 
+    CharStringHashTable * dictionary) {
 
     std::cout << "Start to recommend" << std::endl;
 
@@ -48,10 +48,9 @@ void recommendAll(CharString * map,
 }
 
 CharStringLink * recommend(CharString * map,
- 
     const CharString & title,
- 
-    BalancedBinaryTree * tree, CharStringHashTable * dictionary) {
+    BalancedBinaryTree * tree, 
+    CharStringHashTable * dictionary) {
    
     // 获得标题对应的id
     int id = searchDocIdByTitle(map, title);
@@ -66,8 +65,8 @@ CharStringLink * recommend(CharString * map,
     queryWords.append(*wordsInFile);
     queryWords.clearShorterThan(2);
     queryWords.clearNumbers();
-    // TODO slice 20 words
-    // 查询上面得到的所有的词
+    // 选取前20个词进行查询
+    queryWords.slice(20);
     InvertedFileLinkList * fileList = query(tree, &queryWords);
     // 取出查询结果的前5个作为最终结果
     int count = 0;

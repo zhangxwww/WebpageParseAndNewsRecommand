@@ -105,6 +105,13 @@ public:
 
 
     /**
+     *  删掉startPos之后的所有节点
+     *  @param startPos: 删除的起点
+     */
+    void slice(const int startPos);
+
+
+    /**
      *  重载 << 号
      *  @param out: 宽输出流的引用
      *  @param csl: 用于输出的链表

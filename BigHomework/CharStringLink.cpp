@@ -68,8 +68,10 @@ bool CharStringLink::remove(const int index) {
     if (index >= len || index < 0) { // 非法参数
         return false;
     }
-    curPos = head;
-    curIndex = -1;
+    if (curIndex >= index - 1) {
+        curPos = head;
+        curIndex = -1;
+    }
     for (; curIndex < index - 1; curIndex++) {
         curPos = curPos->getNext();
     }
@@ -208,6 +210,10 @@ void CharStringLink::clearNumbers() {
             curIndex++;
         }
     }
+}
+
+void CharStringLink::slice(const int startPos) {
+    while (remove(startPos));
 }
 
 std::wostream & operator<<(std::wostream & out, 
