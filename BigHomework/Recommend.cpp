@@ -66,6 +66,7 @@ CharStringLink * recommend(CharString * map,
     queryWords.append(*wordsInFile);
     queryWords.clearShorterThan(2);
     queryWords.clearNumbers();
+    // TODO slice 20 words
     // 查询上面得到的所有的词
     InvertedFileLinkList * fileList = query(tree, &queryWords);
     // 取出查询结果的前5个作为最终结果
@@ -79,8 +80,8 @@ CharStringLink * recommend(CharString * map,
     if (fileList != nullptr) {
         delete fileList;
     }
-    if (queryWords != nullptr) {
-        delete queryWords;
+    if (wordsInFile != nullptr) {
+        delete wordsInFile;
     }
     return result;
 }
