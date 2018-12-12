@@ -9,11 +9,6 @@ class BalancedBinaryTreeNode;
 class CharStringLink;
 class CharStringHashTable;
 
-namespace BIF {
-    /* 网页总数 */
-    static const int COUNT_FILES = 781;
-}
-
 
 /**
  *  建立词典及其倒排文档

@@ -7,6 +7,7 @@
 #include "InitDictionary.h"
 #include "DivideWords.h"
 #include "Stack.h"
+#include "WebPagesInfo.h"
 
 #include <sstream>
 #include <string>
@@ -14,10 +15,14 @@
 BalancedBinaryTree * buildInvertedFiles(
     const CharStringHashTable * dictionary) {
 
+    std::cout << "Start to build the tree" << std::endl;
+
     BalancedBinaryTree * tree = nullptr;
     bool ok = false;
     // 如果存在已经完成的词典与倒排文档的文件
     tree = fromExistedInvertedfiles(ok);
+    std::cout << "Finish building!" << std::endl;
+    std::cout << std::endl;
     if (ok) {
         return tree;
     }
@@ -26,6 +31,8 @@ BalancedBinaryTree * buildInvertedFiles(
         tree = fromDataBase(dictionary);
         save(tree);
     }
+    std::cout << "Finish building!" << std::endl;
+    std::cout << std::endl;
     return tree;
 }
 
@@ -121,7 +128,7 @@ BalancedBinaryTree * fromDataBase(
 
     BalancedBinaryTree * tree = new BalancedBinaryTree;
 
-    for (int id = 0; id < BIF::COUNT_FILES; id++) {
+    for (int id = 0; id < WPI::COUNT_FILES; id++) {
         CharStringLink * words = new CharStringLink;
         // .\output目录下不存在对应的分词文件.txt
         if (!fromTxtFile(id, words)) {
@@ -172,7 +179,6 @@ bool fromTxtFile(const int order,
     file.imbue(loc);
     file.open(txtFileName.wstring(), std::ios::in);
     if (file) {
-        std::wcout << txtFileName << std::endl;
         file >> (*words);
         file.close();
     }
@@ -198,7 +204,6 @@ bool fromInfoFile(const int order,
     file.imbue(loc);
     file.open(infoFileName.wstring(), std::ios::in);
     if (file) {
-        std::wcout << infoFileName << std::endl;
         file.close();
         (*words) = divideWords(infoFileName.subString(9), *dictionary);
     }
@@ -228,7 +233,6 @@ bool fromHtmlFile(const int order,
     file.imbue(loc);
     file.open(htmlFileName.wstring(), std::ios::in);
     if (file) {
-        std::wcout << htmlFileName << std::endl;
         file.close();
         const NewsInfo info = extractInfo(htmlFileName.subString(8));
         saveNewsInfo(info, htmlFileName.subString(8));

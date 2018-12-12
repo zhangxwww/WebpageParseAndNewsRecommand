@@ -75,6 +75,15 @@
     <ClInclude Include="Query.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DocIdToTitle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WebPagesInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Recommend.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,6 +132,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Query.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DocIdToTitle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Recommend.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

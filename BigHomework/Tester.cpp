@@ -1,4 +1,16 @@
 #include "Tester.h"
+#include "Stack.h"
+#include "CharString.h"
+#include "CharStringLinkNode.h"
+#include "CharStringLink.h"
+#include "NewsInfo.h"
+#include "ExtractInfo.h"
+#include "InitDictionary.h"
+#include "DivideWords.h"
+#include "BalancedBinaryTree.h"
+#include "DocIdToTitle.h"
+
+#include <iostream>
 
 void Tester::testStack() {
     Stack<int> stack;
@@ -198,4 +210,13 @@ void Tester::testBalancedBinaryTree() {
     newword = L"34";
     tree->search(tree->getRoot(), newword, nullptr, bbtn);
     delete tree;
+}
+
+void Tester::testDocIdTOTitle() {
+    CharString * map = getDocIdToTitle();
+    std::locale loc(".936");
+    std::wcout.imbue(loc);
+    for (int i = 0; i < 781; i++) {
+        std::wcout << i << L'\t' << map[i] << std::endl;
+    }
 }

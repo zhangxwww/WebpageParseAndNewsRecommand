@@ -24,6 +24,7 @@
     <ClInclude Include="BalancedFactor.h" />
     <ClInclude Include="BuildInvertedFiles.h" />
     <ClInclude Include="DivideWords.h" />
+    <ClInclude Include="DocIdToTitle.h" />
     <ClInclude Include="ExtractInfo.h" />
     <ClInclude Include="CharString.h" />
     <ClInclude Include="CharStringHashTable.h" />
@@ -36,15 +37,18 @@
     <ClInclude Include="LabelType.h" />
     <ClInclude Include="NewsInfo.h" />
     <ClInclude Include="Query.h" />
+    <ClInclude Include="Recommend.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="Tester.h" />
+    <ClInclude Include="WebPagesInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BalancedBinaryTree.cpp" />
     <ClCompile Include="BalancedBinaryTreeNode.cpp" />
     <ClCompile Include="BuildInvertedFiles.cpp" />
     <ClCompile Include="DivideWords.cpp" />
+    <ClCompile Include="DocIdToTitle.cpp" />
     <ClCompile Include="ExtractInfo.cpp" />
     <ClCompile Include="CharString.cpp" />
     <ClCompile Include="CharStringHashTable.cpp" />
@@ -56,6 +60,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewsInfo.cpp" />
     <ClCompile Include="Query.cpp" />
+    <ClCompile Include="Recommend.cpp" />
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

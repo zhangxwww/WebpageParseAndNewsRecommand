@@ -4,7 +4,8 @@
 #include "CharString.h"
 #include "CharStringLink.h"
 #include "Stack.h"
-#include "CharStringHashTable.h"
+
+class CharStringHashTable;
 
 /**
  *  ∑÷¥ À„∑®

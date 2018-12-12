@@ -3,6 +3,9 @@
 #include "DivideWords.h"
 #include "BuildInvertedFiles.h"
 #include "Query.h"
+#include "DocIdToTitle.h"
+#include "Recommend.h"
+#include "BalancedBinaryTree.h"
 #include "Tester.h"
 
 #include <iostream>
@@ -29,12 +32,23 @@ int main() {
      */
     divideWordsInAllFiles(dictionary);
 
+    // 
+    CharString * idToTitle = getDocIdToTitle();
 
 
     BalancedBinaryTree * tree = buildInvertedFiles(&dictionary);
 
 
-    queryAll(tree, &dictionary);
+    // queryAll(tree, &dictionary);
+
+    recommendAll(idToTitle, tree, &dictionary);
+
+    if (idToTitle != nullptr) {
+        delete idToTitle;
+    }
+    if (tree != nullptr) {
+        delete tree;
+    }
 
     return 0;
 }

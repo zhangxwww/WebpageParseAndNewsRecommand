@@ -36,7 +36,7 @@ InvertedFileLinkList * query(
  *  @param file    : 待写入的文件
  *  @param fileList: 保存结果的文档链表
  */
-void saveResults(std::wofstream & file,
+void saveQueryResults(std::wofstream & file,
     const InvertedFileLinkList * fileList);
 
 
@@ -46,7 +46,7 @@ void saveResults(std::wofstream & file,
  *  @param times: 这一文章中查询的词出现的总次数
  *  @return     : 按照题目要求的格式的字符串
  */
-const CharString generateResultWithCorrectFormat(
+const CharString generateQueryResultWithCorrectFormat(
     const int id, const int times);
 
 #endif // !QUERY

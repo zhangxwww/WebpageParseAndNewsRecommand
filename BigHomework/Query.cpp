@@ -12,6 +12,8 @@
 void queryAll(BalancedBinaryTree * tree,
     const CharStringHashTable * dictionary) {
 
+    std::cout << "Start to query" << std::endl;
+
     CharString queryFileName;
     CharString resultFileName;
     queryFileName = L"query1.txt";
@@ -36,12 +38,15 @@ void queryAll(BalancedBinaryTree * tree,
         // 这实际上是对几个单词对应的倒排文档进行了合并
         InvertedFileLinkList * fileList = query(tree, &queryWords);
         // 保存结果
-        saveResults(resultFile, fileList);
+        saveQueryResults(resultFile, fileList);
         delete fileList;
         line.clear();
     }
     queryFile.close();
     resultFile.close();
+
+    std::cout << "Finish querying!" << std::endl;
+    std::cout << std::endl;
 }
 
 InvertedFileLinkList * query(
@@ -67,19 +72,19 @@ InvertedFileLinkList * query(
     return result;
 }
 
-void saveResults(std::wofstream & file, 
+void saveQueryResults(std::wofstream & file, 
     const InvertedFileLinkList * fileList) {
 
     InvertedFileLinkNode * p = fileList->getHead()->getNext();
     while (p != nullptr && p->getID() != -1) {            
-        file << generateResultWithCorrectFormat(
+        file << generateQueryResultWithCorrectFormat(
             p->getID(), p->getTimes());
         p = p->getNext();
     }
     file << std::endl;
 }
 
-const CharString generateResultWithCorrectFormat(
+const CharString generateQueryResultWithCorrectFormat(
     const int id, const int times) {
 
     CharString result;

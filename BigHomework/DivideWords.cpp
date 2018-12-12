@@ -1,3 +1,4 @@
+#include "CharStringHashTable.h"
 #include "DivideWords.h"
 
 #include <io.h>
