@@ -27,6 +27,7 @@ void recommendAll(CharString * map,
     std::wstring line;
     CharString title;
 
+    int count = 0;
     // 每次读入的一行，就是一次推荐
     while (!queryFile.eof()) {
         std::getline(queryFile, line);
@@ -40,6 +41,7 @@ void recommendAll(CharString * map,
         if (recommendResults != nullptr) {
             delete recommendResults;
         }
+        std::cout << count++ << std::endl;
     }
     queryFile.close();
     resultFile.close();
@@ -61,20 +63,24 @@ CharStringLink * recommend(CharString * map,
     CharStringLink * wordsInFile = new CharStringLink;
     // 从对应的分词文件中读出所查询的标题对应的文章的分词结果
     fromTxtFile(id, wordsInFile);
+    // 再加上标题的分词结果
     CharStringLink queryWords = divideOneLine(*dictionary, title);
     queryWords.append(*wordsInFile);
     queryWords.clearShorterThan(2);
     queryWords.clearNumbers();
-    // 选取前20个词进行查询
-    queryWords.slice(20);
     InvertedFileLinkList * fileList = query(tree, &queryWords);
     // 取出查询结果的前5个作为最终结果
     int count = 0;
     InvertedFileLinkNode * p = fileList->getHead()->getNext();
     while (p != nullptr && p->getID() != -1 && count < 5) {
-        result->add(map[p->getID()]);
+        CharString docTitle = map[p->getID()];
+        // 去掉原标题和重复的标题
+        if (!(docTitle == title) 
+             && result->search(docTitle) == -1) {
+            result->add(docTitle);
+            count++;
+        }
         p = p->getNext();
-        count++;
     }
     if (fileList != nullptr) {
         delete fileList;
@@ -97,14 +103,16 @@ void saveRecommendResults(CharString * map,
         while (recommendDocs->length() > 0) {
             p = recommendDocs->pop();
             CharString title = p->getCharString();
-            file << generateRecommendResultWithCorrectFormat(
+            CharString record = generateRecommendResultWithCorrectFormat(
                 searchDocIdByTitle(map, title), title);
+            file << record;
         }
     }
     file << std::endl;
 }
 
-const CharString generateRecommendResultWithCorrectFormat(const int id, const CharString & title) {
+const CharString generateRecommendResultWithCorrectFormat(
+    const int id, const CharString & title) {
     
     CharString result;
     result = L"(";

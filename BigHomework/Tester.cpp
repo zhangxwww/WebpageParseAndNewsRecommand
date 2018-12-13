@@ -46,12 +46,18 @@ void Tester::testCharString() {
     cs2 = L"盲目";
     cs3 = L"啊";
     cs4 = L"啊啊";
-    std::wcout << cs1 << "<" << cs2 << " " << (cs1 < cs2) << std::endl;
-    std::wcout << cs2 << "<" << cs1 << " " << (cs2 < cs1) << std::endl;
-    std::wcout << cs1 << "==" << cs2 << " " << (cs1 == cs2) << std::endl;
 
-    
-    // std::wcout << CharString::parseFromInteger(123) << std::endl;
+    CharString result;
+    CharString title;
+    title = L"清流 |吴秀波《军师联盟》收益法院不予认可 或波及当代东方业绩对赌失败";
+    result = L"(";
+    CharString id;
+    id = L"351";
+    result.concat(id);
+    result.concat(L',');
+    result.concat(title);
+    result.concat(L')');
+    result.concat(L' ');
 }
 
 void Tester::testCharStringLink() {
@@ -69,15 +75,16 @@ void Tester::testCharStringLink() {
 
     CharStringLink csl1;
 
-    csl1.add(cs1);
-    csl1.add(cs2);
-    csl1.add(cs3);
-    csl1.add(cs4);
-    csl1.remove(1);
-    CharStringLinkNode * p = csl1.getHead()->getNext();
-    CharString cs5;
-    cs5 = p->getCharString();
-    std::wcout << cs5 << std::endl;
+    
+    for (int i = 0; i < 10; i++) {
+        csl1.add(cs1);
+        csl1.add(cs2);
+        csl1.add(cs3);
+        csl1.add(cs4);
+    }
+    csl1.slice(50);
+    std::wcout << csl1 << std::endl;
+    std::cout << csl1.length() << std::endl;
     /*
     for (int i = 0; i < 4; i++) {
         std::wcout << csl1.getItem(i) << std::endl;

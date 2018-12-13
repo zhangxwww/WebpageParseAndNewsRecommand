@@ -187,6 +187,7 @@ void CharString::concat(const CharString & cstr) {
         items[i + len] = cstr[i];
     }
     len += cstrLen;
+    maxSize = newSize;
     items[len] = L'\0';
 }
 

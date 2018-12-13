@@ -51,7 +51,7 @@ void CharStringLink::add(const CharString cs) {
 }
 
 void CharStringLink::add(const CharString cs, int index) {
-    if (index<0 || index>len) { // 非法参数
+    if (index < 0 || index > len) { // 非法参数
         throw ERROR;
     }
     CharStringLinkNode * csln = new CharStringLinkNode(cs);

@@ -33,10 +33,13 @@ int main() {
     divideWordsInAllFiles(dictionary);
 
     // 
-    CharString * idToTitle = getDocIdToTitle();
+    
+    CharString * idToTitle = nullptr;
+    idToTitle = getDocIdToTitle();
 
 
-    BalancedBinaryTree * tree = buildInvertedFiles(&dictionary);
+    BalancedBinaryTree * tree = nullptr;
+    tree = buildInvertedFiles(&dictionary);
 
 
     // queryAll(tree, &dictionary);
@@ -44,11 +47,12 @@ int main() {
     recommendAll(idToTitle, tree, &dictionary);
 
     if (idToTitle != nullptr) {
-        delete idToTitle;
+        delete[] idToTitle;
     }
     if (tree != nullptr) {
         delete tree;
     }
-
+    
+    // Tester::testCharStringLink();
     return 0;
 }
