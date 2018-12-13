@@ -51,7 +51,8 @@ void queryAll(BalancedBinaryTree * tree,
 
 InvertedFileLinkList * query(
     BalancedBinaryTree * tree, 
-    CharStringLink * queryWords) {
+    CharStringLink * queryWords, 
+    bool excludeCommonWords) {
 
     InvertedFileLinkList * result = 
         new InvertedFileLinkList(nullptr);
@@ -60,7 +61,11 @@ InvertedFileLinkList * query(
         CharString word = queryWords->pop()->getCharString();
         BalancedBinaryTreeNode * p = nullptr;        
         bool taller = false;
-        if (tree->search(tree->getRoot(), word, nullptr, p)) {
+        if (tree->search(tree->getRoot(), word, nullptr, p)           
+            && (!excludeCommonWords 
+                // 如果选择了排除常用词，那么会去掉在超过100篇文章中出现过的词
+                || (excludeCommonWords && p->getDocs() < 100))) {
+
             InvertedFileLinkNode * docNode = 
                 p->getFileLinkList()->getHead()->getNext();
             while (docNode != nullptr && docNode->getID() != -1) {

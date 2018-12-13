@@ -27,7 +27,6 @@ void recommendAll(CharString * map,
     std::wstring line;
     CharString title;
 
-    int count = 0;
     // 每次读入的一行，就是一次推荐
     while (!queryFile.eof()) {
         std::getline(queryFile, line);
@@ -41,7 +40,6 @@ void recommendAll(CharString * map,
         if (recommendResults != nullptr) {
             delete recommendResults;
         }
-        std::cout << count++ << std::endl;
     }
     queryFile.close();
     resultFile.close();
@@ -68,7 +66,7 @@ CharStringLink * recommend(CharString * map,
     queryWords.append(*wordsInFile);
     queryWords.clearShorterThan(2);
     queryWords.clearNumbers();
-    InvertedFileLinkList * fileList = query(tree, &queryWords);
+    InvertedFileLinkList * fileList = query(tree, &queryWords, true);
     // 取出查询结果的前5个作为最终结果
     int count = 0;
     InvertedFileLinkNode * p = fileList->getHead()->getNext();

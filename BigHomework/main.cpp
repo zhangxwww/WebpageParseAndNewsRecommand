@@ -32,18 +32,19 @@ int main() {
      */
     divideWordsInAllFiles(dictionary);
 
-    // 
     
+    /* 获取文章id与标题之间的映射，用于之后的推荐 */
     CharString * idToTitle = nullptr;
     idToTitle = getDocIdToTitle();
 
-
+    /* 建立词典索引与倒排文档链表 */
     BalancedBinaryTree * tree = nullptr;
     tree = buildInvertedFiles(&dictionary);
 
+    /* 批量查询 */
+    queryAll(tree, &dictionary);
 
-    // queryAll(tree, &dictionary);
-
+    /* 批量推荐 */
     recommendAll(idToTitle, tree, &dictionary);
 
     if (idToTitle != nullptr) {
@@ -53,6 +54,5 @@ int main() {
         delete tree;
     }
     
-    // Tester::testCharStringLink();
     return 0;
 }

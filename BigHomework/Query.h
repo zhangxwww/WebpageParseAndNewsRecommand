@@ -27,8 +27,9 @@ void queryAll(BalancedBinaryTree * tree,
  *  @return          : 查询的结果，以文档链表的形式保存
  */
 InvertedFileLinkList * query(
-    BalancedBinaryTree * tree, 
-    CharStringLink * queryWords);
+    BalancedBinaryTree * tree,
+    CharStringLink * queryWords, 
+    bool excludeCommonWords=false);
 
 
 /**
