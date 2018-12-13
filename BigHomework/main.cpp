@@ -8,8 +8,6 @@
 #include "BalancedBinaryTree.h"
 #include "Tester.h"
 
-#include <iostream>
-
 using namespace std;
 
 int main() {
