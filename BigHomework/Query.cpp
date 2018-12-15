@@ -64,7 +64,7 @@ InvertedFileLinkList * query(
         if (tree->search(tree->getRoot(), word, nullptr, p)           
             && (!excludeCommonWords 
                 // 如果选择了排除常用词，那么会去掉在超过100篇文章中出现过的词
-                || (excludeCommonWords && p->getDocs() < 100))) {
+                || (excludeCommonWords && p->getDocs() < 50))) {
 
             InvertedFileLinkNode * docNode = 
                 p->getFileLinkList()->getHead()->getNext();

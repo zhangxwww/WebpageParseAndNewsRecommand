@@ -44,7 +44,7 @@ int main() {
 
     /* ÅúÁ¿ÍÆ¼ö */
     recommendAll(idToTitle, tree, &dictionary);
-
+    
     if (idToTitle != nullptr) {
         delete[] idToTitle;
     }

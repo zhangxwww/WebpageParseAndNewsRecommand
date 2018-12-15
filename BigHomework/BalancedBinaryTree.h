@@ -2,6 +2,7 @@
 #define BALANCED_BINARY_TREE
 
 #include "BalancedBinaryTreeNode.h"
+#include "CharString.h"
 
 class BalancedBinaryTree {
 
@@ -43,11 +44,40 @@ public:
      *  调整平衡二叉树使其平衡
      *  @param root     : 当前树的根结点
      *  @param childType: 用于判断被插入并长高的是左子树还是右子树
-     *  @param taller   : 记录树是否长高
+     *  @param change   : 记录树是否长高
      */
     void adjust(BalancedBinaryTreeNode * & root,
         const int childType,
-        bool & taller);
+        const int changeType,
+        bool & change);
+
+
+    /**
+     *  平衡二叉树的删除
+     *  @param root   : 当前树的根结点
+     *  @param parent : root的父节点，初始调用应为 nullptr
+     *  @param term   : 待删除的词
+     *  @param shorter: 记录树是否变矮
+     *  @return       : 删除成功返回 true，不存在则返回 false
+     */
+    bool remove(BalancedBinaryTreeNode * & root,
+        BalancedBinaryTreeNode * parent,
+        const CharString & term,
+        bool & shorter);
+
+
+    /**
+     *  平衡二叉树的编辑
+     *  @param root   : 当前树的根结点
+     *  @param p      : 保存编辑后的结点
+     *  @param oldTerm: 待删除的词
+     *  @param newTerm: 待删除的词
+     *  @return       : 编辑成功返回 true，否则则返回 false
+     */
+    bool edit(BalancedBinaryTreeNode * & root,
+        BalancedBinaryTreeNode * & p,
+        const CharString & oldTerm,
+        const CharString & newTerm);
 
 
     /********** 以下几个函数为为了方便而添加的函数 **********/
@@ -91,9 +121,13 @@ private:
     /* 树的根节点 */
     BalancedBinaryTreeNode * root;
 
-    /* 用于adjust函数中判断插入并长高的树是左子树还是右子树 */
+    /* 用于adjust函数中判断发生变化的树是左子树还是右子树 */
     const static int RIGHT = 1;
     const static int LEFT = 0;
+
+    /* 用于adjust函数中判断发生的变化是增高还是降低 */
+    const static int TALLER = 1;
+    const static int SHORTER = 0;
 };
 
 #endif // !BALANCED_BINARY_TREE

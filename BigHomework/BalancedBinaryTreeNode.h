@@ -63,6 +63,13 @@ public:
 
 
     /**
+     *  设定当前结点的单词
+     *  @param term: 待设定的单词
+     */
+    void setTerm(const CharString & term);
+
+
+    /**
      *  获取以当前结点的保存的倒排文档链表
      *  @return: 当前结点保存的倒排文档链表
      */

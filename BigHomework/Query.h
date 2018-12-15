@@ -24,7 +24,7 @@ void queryAll(BalancedBinaryTree * tree,
  *  完成一次查询
  *  @param tree              : 词典对应的二叉树
  *  @param queryWords        : 待查询的词
- *  @param excludeCommonWords: 是否排除常用词，如果是，则除掉出现在100篇以上文章中的词后再查询
+ *  @param excludeCommonWords: 是否排除常用词，如果是，则除掉出现在50篇以上文章中的词后再查询
  *  @return                  : 查询的结果，以文档链表的形式保存
  */
 InvertedFileLinkList * query(

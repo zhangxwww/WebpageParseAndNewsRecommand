@@ -17,30 +17,38 @@ bool BalancedBinaryTree::insert(
     const CharString & term, 
     bool & taller) {
 
+    // 没有对应的结点，则创建
     if (root == nullptr) {
         root = new BalancedBinaryTreeNode(term);
         p = root;
         taller = true;
     }
     else {
+        // 找到了对应结点，返回false
         if (term == root->getTerm()) {
             taller = false;
             return false;
         }
         if (term < root->getTerm()) {
+            // 在左子树中插入
             if (!insert(root->getLeft(), p, term, taller)) {
                 return false;
             }
+            // 平衡
             if(taller){
-                adjust(root, BalancedBinaryTree::LEFT, taller);
+                adjust(root, BalancedBinaryTree::LEFT,
+                    BalancedBinaryTree::TALLER, taller);
             }
         }
         else {
+            // 在右子树中插入
             if (!insert(root->getRight(), p, term, taller)) {
                 return false;
             }
+            // 平衡
             if (taller) {
-                adjust(root, BalancedBinaryTree::RIGHT, taller);
+                adjust(root, BalancedBinaryTree::RIGHT,
+                    BalancedBinaryTree::TALLER, taller);
             }
         }
     }
@@ -70,44 +78,201 @@ bool BalancedBinaryTree::search(
 void BalancedBinaryTree::adjust(
     BalancedBinaryTreeNode *& root, 
     const int childType, 
-    bool & taller) {
+    const int changeType,
+    bool & change) {
 
-    if (childType == BalancedBinaryTree::LEFT) {
-        switch (root->getBalancedFactor()) {
-        case LH:
-            leftBalance(root);
-            taller = false;
-            break;
-        case EH:
-            root->setBalancedFactor(LH);
-            taller = true;
-            break;
-        case RH:
-            root->setBalancedFactor(EH);
-            taller = false;
-            break;
-        default:
-            break;
+    if (changeType == BalancedBinaryTree::TALLER) {
+        if (childType == BalancedBinaryTree::LEFT) {
+            switch (root->getBalancedFactor()) {
+            case LH:
+                leftBalance(root);
+                change = false;
+                break;
+            case EH:
+                root->setBalancedFactor(LH);
+                change = true;
+                break;
+            case RH:
+                root->setBalancedFactor(EH);
+                change = false;
+                break;
+            default:
+                break;
+            }
+        }
+        else {
+            switch (root->getBalancedFactor()) {
+            case LH:
+                root->setBalancedFactor(EH);
+                change = false;
+                break;
+            case EH:
+                root->setBalancedFactor(RH);
+                change = true;
+                break;
+            case RH:
+                rightBalance(root);
+                change = false;
+                break;
+            default:
+                break;
+            }
         }
     }
     else {
-        switch (root->getBalancedFactor()) {
-        case LH:
-            root->setBalancedFactor(EH);
-            taller = false;
-            break;
-        case EH:
-            root->setBalancedFactor(RH);
-            taller = true;
-            break;
-        case RH:
-            rightBalance(root);
-            taller = false;
-            break;
-        default:
-            break;
+        if (childType == BalancedBinaryTree::LEFT) {
+            switch (root->getBalancedFactor()) {
+            case LH:
+                root->setBalancedFactor(EH);
+                change = true;
+                break;
+            case EH:
+                root->setBalancedFactor(RH);
+                change = false;
+                break;
+            case RH:
+                if (root->getRight()->getBalancedFactor() == EH) {
+                    change = false;
+                }
+                else {
+                    change = true;
+                }
+                rightBalance(root);
+                break;
+            default:
+                break;
+            }
+        }
+        else {
+            switch (root->getBalancedFactor()) {
+            case LH:
+                if (root->getLeft()->getBalancedFactor() == EH) {
+                    change = false;
+                }
+                else {
+                    change = true;
+                }
+                leftBalance(root);
+                break;
+            case EH:
+                root->setBalancedFactor(LH);
+                change = false;
+                break;
+            case RH:
+                root->setBalancedFactor(EH);
+                change = true;
+                break;
+            default:
+                break;
+            }
         }
     }
+}
+
+bool BalancedBinaryTree::remove(
+    BalancedBinaryTreeNode *& root, 
+    BalancedBinaryTreeNode * parent,
+    const CharString & term, 
+    bool & shorter) {
+
+    // 没有找到对应结点
+    if (root == nullptr) {
+        return false;
+    }
+    if (term < root->getTerm()) {
+        // 在左子树中删除
+        if (!remove(root->getLeft(), root, term, shorter)) {
+            return false;
+        }
+        // 平衡
+        if (shorter) {
+            adjust(root, BalancedBinaryTree::LEFT, 
+                BalancedBinaryTree::SHORTER, shorter);
+        }
+    }
+    else if (root->getTerm() < term) {
+        // 在右子树中删除
+        if (!remove(root->getRight(), root, term, shorter)) {
+            return false;
+        }
+        // 平衡
+        if (shorter) {
+            adjust(root, BalancedBinaryTree::RIGHT,
+                BalancedBinaryTree::SHORTER, shorter);
+        }
+    }
+    // 找到对应的结点root
+    else {
+        // 左右子树均不空
+        if (root->getLeft() != nullptr
+            && root->getRight() != nullptr) {
+            BalancedBinaryTreeNode * p = root->getLeft();
+            while (p->getRight() != nullptr) {
+                p = p->getRight();
+            }
+            // 用其前驱替换并删掉前驱
+            root->setTerm(p->getTerm());
+            remove(root->getLeft(), root, p->getTerm(), shorter);
+        }
+        // 左子树空
+        else if (root->getLeft() == nullptr) {
+            BalancedBinaryTreeNode * q = root;
+            if (parent == nullptr) {
+                getRoot() = root->getRight();
+            }
+            else {
+                if (root == parent->getLeft()) {
+                    parent->setLeft(root->getRight());
+                }
+                else {
+                    parent->setRight(root->getRight());
+                }
+            }
+            shorter = true;
+            q->setLeft(nullptr);
+            q->setRight(nullptr);
+            delete q;
+        }
+        // 右子树空
+        else if (root->getRight() == nullptr) {
+            BalancedBinaryTreeNode * q = root;
+            if (parent == nullptr) {
+                getRoot() = root->getLeft();
+            }
+            else {
+                if (root == parent->getLeft()) {
+                    parent->setLeft(root->getLeft());
+                }
+                else {
+                    parent->setRight(root->getLeft());
+                }
+            }
+            shorter = true;
+            q->setLeft(nullptr);
+            q->setRight(nullptr);
+            delete q;
+        }       
+    }
+    return true;
+}
+
+bool BalancedBinaryTree::edit(
+    BalancedBinaryTreeNode *& root, 
+    BalancedBinaryTreeNode *& p, 
+    const CharString & oldTerm, 
+    const CharString & newTerm) {
+
+    // 删掉旧结点，插入新结点
+    bool shorter = false;
+    if (remove(root, nullptr, oldTerm, shorter)) {
+        BalancedBinaryTreeNode * p = nullptr;
+        bool taller = false;
+        if (insert(root, p, newTerm, taller)) {
+            return true;
+        }
+    }
+    // 如果 oldTerm 不存在或是 newTerm 已存在均会失败
+    return false;
 }
 
 BalancedBinaryTreeNode *& BalancedBinaryTree::getRoot() {
@@ -168,6 +333,11 @@ void BalancedBinaryTree::leftBalance(
         L_rotate(root->getLeft());
         R_rotate(root);
         break;
+    case EH:
+        leftChild->setBalancedFactor(RH);
+        root->setBalancedFactor(LH);
+        R_rotate(root);
+        break;
     default:
         break;
     }
@@ -209,8 +379,12 @@ void BalancedBinaryTree::rightBalance(
         R_rotate(root->getRight());
         L_rotate(root);
         break;
+    case EH:
+        rightChild->setBalancedFactor(LH);
+        root->setBalancedFactor(RH);
+        L_rotate(root);
+        break;
     default:
         break;
     }
 }
-

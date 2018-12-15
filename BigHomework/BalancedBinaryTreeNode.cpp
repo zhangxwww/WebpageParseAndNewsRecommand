@@ -46,6 +46,11 @@ const CharString & BalancedBinaryTreeNode::getTerm() const {
     return term;
 }
 
+void BalancedBinaryTreeNode::setTerm(
+    const CharString & term) {
+    this->term = term;
+}
+
 InvertedFileLinkList * BalancedBinaryTreeNode::getFileLinkList() const {
     return list;
 }

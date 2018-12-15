@@ -191,32 +191,48 @@ void Tester::testBalancedBinaryTree() {
 
     BalancedBinaryTree * tree = new BalancedBinaryTree;
     CharString words[10];
-    words[0] = L"理解";
-    words[1] = L"理性";
-    words[2] = L"例如";
-    words[3] = L"联系";
-    words[4] = L"亮色";
-    words[5] = L"另一方面";
-    words[6] = L"另一种";
-    words[7] = L"律师事务所";
-    words[8] = L"盲目";
-    words[9] = L"媒体";
-    for (int j = 0; j < 20; j++) {
-        for (int i = 0; i < 5; i++) {
+    words[0] = L"0";
+    words[1] = L"1";
+    words[2] = L"2";
+    words[3] = L"3";
+    words[4] = L"4";
+    words[5] = L"5";
+    words[6] = L"6";
+    words[7] = L"7";
+    words[8] = L"8";
+    words[9] = L"9";
+    
+    CharString newwords[10];
+    newwords[0] = L"a";
+    newwords[1] = L"b";
+    newwords[2] = L"c";
+    newwords[3] = L"d";
+    newwords[4] = L"e";
+    newwords[5] = L"f";
+    newwords[6] = L"g";
+    newwords[7] = L"h";
+    newwords[8] = L"i";
+    newwords[9] = L"j";
+
+    for (int i = 0;; i++) {
+        for (int i = 0; i < 10; i++) {
             bool taller = false;
             BalancedBinaryTreeNode * p = nullptr;
             tree->insert(tree->getRoot(), p, words[i], taller);
         }
+        for (int i = 0; i < 10; i++) {
+            BalancedBinaryTreeNode * p = nullptr;
+            tree->edit(tree->getRoot(), p, words[i], newwords[i]);
+        }
+        for (int i = 9; i >= 0; i--) {
+            bool shorter = false;
+            tree->remove(tree->getRoot(), nullptr, newwords[i], shorter);
+        }
+        if (i % 10000 == 0) {
+            std::cout << i << std::endl;
+        }
     }
-
-    BalancedBinaryTreeNode * bbtn = nullptr;
-    for (int i = 0; i < 10; i++) {
-        tree->search(tree->getRoot(), words[i], nullptr, bbtn);
-    }
-    CharString newword;
-    newword = L"34";
-    tree->search(tree->getRoot(), newword, nullptr, bbtn);
-    delete tree;
+    
 }
 
 void Tester::testDocIdTOTitle() {
