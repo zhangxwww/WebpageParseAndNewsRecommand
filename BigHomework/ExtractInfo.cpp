@@ -106,8 +106,8 @@ void parseLine(const CharString & line,
     bool isLabel = false;
     
     CharString processedLine = line;
-    // 如果这一行过长，如超过100000字符，则进行一遍过滤，去掉无用注释
-    if (processedLine.length() > 100000) {
+    // 如果这一行过长，如超过1000字符，则进行一遍过滤，去掉无用注释
+    if (processedLine.length() > 1000) {
         processedLine = filtNotation(processedLine);
     }
     while (true) {
