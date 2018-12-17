@@ -3,6 +3,7 @@
 CharString::CharString() {
     maxSize = INIT_SIZE;
     items = new wchar_t[maxSize + 1];
+    items[0] = L'\0';
     len = 0;
 }
 

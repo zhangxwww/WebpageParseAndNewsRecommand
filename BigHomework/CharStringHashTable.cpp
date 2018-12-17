@@ -40,6 +40,7 @@ const CharStringLink & CharStringHashTable::at(const int index) const {
 }
 
 void CharStringHashTable::operator=(const CharStringHashTable & csht) {
+    delete[] cslinks;
     cslinks = new CharStringLink[HASH_SIZE];
     for (int i = 0; i < HASH_SIZE; i++) {
         cslinks[i] = csht.at(i);
@@ -50,7 +51,7 @@ int CharStringHashTable::hash(const CharString & cs) const {
     int len = cs.length();
     int hash = 0;
     for (int i = 0; i < len; i++) {
-        hash = hash * 33 + (int)cs[i];
+        hash = hash * 37 + (int)cs[i];
         hash %= HASH_SIZE;
     }
     return hash;
